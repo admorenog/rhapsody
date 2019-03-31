@@ -2,22 +2,27 @@
   "name": "flex-query-builder",
   "version": "0.0.1",
   "description": "SQL IDE",
-  "main": "main.js",
+  "main": "app/main/main.js",
   "scripts": {
     "start": "electron ."
   },
   "repository": {
-	"type": "git",
-	"url": "git://git@raspi/fqb.git"
+    "type": "git",
+    "url": "git://git@raspi/fqb.git"
   },
   "license": "copyright",
   "keywords": [],
   "author": "amg",
-  "devDependencies": {},
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "electron": "^4.0.7",
+    "bootstrap-sass": "^3.4.1",
+    "electron": "^4.1.3",
+    "electron-view-renderer": "^1.2.4",
+    "gulp": "^4.0.0",
+    "gulp-sass": "^4.0.2",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.7"
+    "node-sass": "^4.11.0",
+    "popper.js": "^1.14.7",
+    "webpack": "^4.29.6"
   }
 }
