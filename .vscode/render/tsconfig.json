@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+		"module": "commonjs",
+		"sourceMap": false,
+		"target": "es6",
+		"removeComments": true,
+		"sourceRoot": "./../../sources/ts/render",
+		"outDir": "../../app/js/render",
+		"noEmit": false,
+		"pretty": true,
+		"lib": [
+		  "es6"
+		],
+		"types": [
+		  "node"
+		]
+	},
+	"include": [ "../../sources/ts/render/**/*.ts" ]
+}

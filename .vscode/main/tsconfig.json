@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+		"module": "commonjs",
+		"sourceMap": false,
+		"target": "es6",
+		"removeComments": true,
+		"sourceRoot": "./../../sources/ts/main",
+		"outDir": "../../app/js/main",
+		"noEmit": false,
+		"pretty": true,
+		"lib": [
+		  "es6"
+		],
+		"types": [
+		  "node"
+		]
+	},
+	"include": [ "../../sources/ts/main/**/*.ts" ]
+}
