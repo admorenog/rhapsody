@@ -1,4 +1,4 @@
-const { Menu } = require('electron');
+const { app, Menu } = require('electron');
 const electron = require('electron');
 const template = [
     {
@@ -129,6 +129,7 @@ if (process.platform === 'darwin') {
             }
         ]
     });
+    // Edit menu.
     template[1].submenu.push({
         type: 'separator'
     }, {
@@ -142,6 +143,7 @@ if (process.platform === 'darwin') {
             }
         ]
     });
+    // Window menu.
     template[3].submenu = [
         {
             label: 'Close',
@@ -168,4 +170,3 @@ if (process.platform === 'darwin') {
 }
 const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
-//# sourceMappingURL=menu.js.map

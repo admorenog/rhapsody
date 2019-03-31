@@ -1,7 +1,7 @@
 const { app, Menu } = require('electron')
 const electron = require('electron')
 
-const template = [
+const template: any = [
 	{
 		label: 'Edit',
 		submenu: [

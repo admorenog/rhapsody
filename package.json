@@ -2,7 +2,7 @@
   "name": "flex-query-builder",
   "version": "0.0.1",
   "description": "SQL IDE",
-  "main": "app/main/main.js",
+  "main": "app/js/main/App.js",
   "scripts": {
     "start": "electron ."
   },
@@ -24,5 +24,8 @@
     "node-sass": "^4.11.0",
     "popper.js": "^1.14.7",
     "webpack": "^4.29.6"
+  },
+  "devDependencies": {
+    "@types/node": "^11.12.2"
   }
 }

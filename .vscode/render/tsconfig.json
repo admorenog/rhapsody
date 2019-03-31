@@ -4,7 +4,6 @@
 		"sourceMap": false,
 		"target": "es6",
 		"removeComments": true,
-		"sourceRoot": "./../../sources/ts/render",
 		"outDir": "../../app/js/render",
 		"noEmit": false,
 		"pretty": true,

@@ -14,4 +14,3 @@ app.on('ready', () => {
     tray.setToolTip('Flex query builder beta');
     tray.setContextMenu(contextMenu);
 });
-//# sourceMappingURL=tray.js.map

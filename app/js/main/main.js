@@ -1,38 +1,56 @@
-const { app, BrowserWindow } = require('electron');
-const ElectronViewRenderer = require('electron-view-renderer');
-const fs = require('fs');
-const path = require('path');
-let config = JSON.parse(fs.readFileSync(app.getAppPath() + path.sep + 'config.json'));
-let ctx = { config: config, render: null, mainWindow: null };
-ctx.render = new ElectronViewRenderer({
-    viewPath: 'app/views',
-    viewProtcolName: 'view',
-    useAssets: true,
-    assetsPath: 'assets',
-    assetsProtocolName: 'asset'
-});
-ctx.render.use('ejs');
-function createWindow() {
-    ctx.mainWindow = new BrowserWindow({ width: 800, height: 600 });
-    ctx.render.load(ctx.mainWindow, 'main', { ctx: ctx });
-    if (config.debug) {
-        ctx.mainWindow.webContents.openDevTools();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const electron_1 = require("electron");
+const electron_view_renderer_1 = require("electron-view-renderer");
+const fs = require("fs");
+const path = require("path");
+class Main {
+    static onWindowAllClosed() {
+        if (process.platform !== 'darwin' || !Main.config.debug) {
+            Main.application.quit();
+        }
     }
-    ctx.mainWindow.on('closed', function () {
-        ctx.mainWindow = null;
-    });
+    static onClosed() {
+        // Dereference the window object.
+        Main.mainWindow = null;
+    }
+    static onReady() {
+        Main.mainWindow = new electron_1.BrowserWindow({ width: 800, height: 600 });
+        // mainWindow.loadFile('main.html');
+        Main.render = new electron_view_renderer_1.default({
+            viewPath: 'app/views',
+            viewProtcolName: 'view',
+            useAssets: true,
+            assetsPath: 'assets',
+            assetsProtocolName: 'asset'
+        });
+        Main.render.use('ejs');
+        Main.render.load(Main.mainWindow, 'main', { ctx: Main });
+        if (Main.config.debug) {
+            Main.mainWindow.webContents.openDevTools();
+        }
+    }
+    static onActivate() {
+        // On macOS it's common to re-create a window in the app when the
+        // dock icon is clicked and there are no other windows open.
+        if (Main.mainWindow === null) {
+            Main.onReady();
+        }
+    }
+    static readConfig() {
+        let configPath = electron_1.app.getAppPath() + path.sep + 'config.json';
+        return fs.readFileSync(configPath).toJSON();
+    }
+    static main(app, browserWindow) {
+        Main.config = Main.readConfig();
+        Main.BrowserWindow = browserWindow;
+        Main.application = app;
+        Main.application.on('window-all-closed', Main.onWindowAllClosed);
+        Main.application.on('ready', Main.onReady);
+        Main.application.on('activate', Main.onActivate);
+        Main.mainWindow.on('closed', Main.onClosed);
+    }
 }
-app.on('ready', createWindow);
-app.on('window-all-closed', function () {
-    if (process.platform !== 'darwin' || !config.debug) {
-        app.quit();
-    }
-});
-app.on('activate', function () {
-    if (ctx.mainWindow === null) {
-        createWindow();
-    }
-});
-require('./js/main/menu');
-require('./js/main/tray');
-//# sourceMappingURL=main.js.map
+exports.default = Main;
+require('./menu');
+require('./tray');
