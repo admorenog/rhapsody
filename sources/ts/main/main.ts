@@ -1,15 +1,15 @@
 import { app, BrowserWindow } from 'electron';
 // import * as ElectronViewRenderer from 'electron-view-renderer';
 // import ElectronViewRenderer from 'electron-view-renderer';
-import * as fs from 'fs';
-import * as path from 'path';
+import Config from './Config';
 import Systray from './Systray';
 import MainMenu from './MainMenu';
 
 const ElectronViewRenderer = require( 'electron-view-renderer' );
+
 export default class Main
 {
-	static config;
+	static config : Config;
 	static render: any;
 	static mainWindow: Electron.BrowserWindow;
 	static application: Electron.App;
@@ -58,10 +58,9 @@ export default class Main
 		}
 	}
 
-	private static readConfig ()
+	private static initConfig ()
 	{
-		let configPath: string = app.getAppPath() + path.sep + 'config.json';
-		return JSON.parse( fs.readFileSync( configPath, "utf-8" ) );
+		return new Config();
 	}
 
 	private static initRender()
@@ -94,7 +93,7 @@ export default class Main
 	{
 		Main.application = app;
 		Main.BrowserWindow = browserWindow;
-		Main.config = Main.readConfig();
+		Main.config = Main.initConfig();
 		Main.menu = Main.initMenu();
 		Main.render = Main.initRender();
 		Main.application.on( 'window-all-closed', Main.onWindowAllClosed );

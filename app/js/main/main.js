@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 // import * as ElectronViewRenderer from 'electron-view-renderer';
 // import ElectronViewRenderer from 'electron-view-renderer';
-const fs = require("fs");
-const path = require("path");
+const Config_1 = require("./Config");
 const Systray_1 = require("./Systray");
+const MainMenu_1 = require("./MainMenu");
 const ElectronViewRenderer = require('electron-view-renderer');
 class Main {
     static onWindowAllClosed() {
@@ -34,9 +34,8 @@ class Main {
             Main.onReady();
         }
     }
-    static readConfig() {
-        let configPath = electron_1.app.getAppPath() + path.sep + 'config.json';
-        return JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    static initConfig() {
+        return new Config_1.default();
     }
     static initRender() {
         let render = new ElectronViewRenderer({
@@ -49,6 +48,10 @@ class Main {
         render.use('ejs');
         return render;
     }
+    static initMenu() {
+        let menu = new MainMenu_1.default();
+        return menu;
+    }
     static getContext() {
         return {
             config: this.config
@@ -57,7 +60,8 @@ class Main {
     static main(app, browserWindow) {
         Main.application = app;
         Main.BrowserWindow = browserWindow;
-        Main.config = Main.readConfig();
+        Main.config = Main.initConfig();
+        Main.menu = Main.initMenu();
         Main.render = Main.initRender();
         Main.application.on('window-all-closed', Main.onWindowAllClosed);
         Main.application.on('ready', Main.onReady);
@@ -65,4 +69,3 @@ class Main {
     }
 }
 exports.default = Main;
-require('./MainMenu');
