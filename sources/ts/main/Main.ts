@@ -7,7 +7,6 @@ import * as SystrayConfig from '../config/systray'
 
 import MainMenu from '../app/controller/MainMenu';
 
-
 const ElectronViewRenderer = require( 'electron-view-renderer' );
 
 export default class Main
@@ -22,7 +21,7 @@ export default class Main
 
 	private static onWindowAllClosed (): void
 	{
-		if ( process.platform !== 'darwin' || !Main.config.debug )
+		if ( process.platform !== 'darwin' || !Config.config( "debug" ) )
 		{
 			Main.application.quit();
 		}
@@ -38,12 +37,12 @@ export default class Main
 	{
 		Main.mainWindow = new BrowserWindow( { width: 800, height: 600 } );
 
-		if ( Main.config.debug )
+		if ( Config.config( 'debug' ) )
 		{
 			Main.mainWindow.webContents.openDevTools()
 		}
 
-		Main.Tray = new Systray();
+		Main.Tray = new Systray( SystrayConfig.config );
 
 		Main.render.load( Main.mainWindow, 'main', { ctx: Main.getContext() } );
 
@@ -58,11 +57,6 @@ export default class Main
 		{
 			Main.onReady();
 		}
-	}
-
-	private static initConfig ()
-	{
-		return new Config();
 	}
 
 	private static initRender()
@@ -95,7 +89,7 @@ export default class Main
 	{
 		Main.application = app;
 		Main.BrowserWindow = browserWindow;
-		Main.config = Main.initConfig();
+		Main.config = Config.config();
 		Main.menu = Main.initMenu();
 		Main.render = Main.initRender();
 		Main.application.on( 'window-all-closed', Main.onWindowAllClosed );

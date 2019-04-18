@@ -1,4 +1,5 @@
 import { Tray, Menu, NativeImage, nativeImage } from 'electron';
+import * as SystrayConfig from '../../config/systray'
 
 export default class Systray
 {
@@ -8,9 +9,9 @@ export default class Systray
 	public menu: Menu;
 	public tooltip: string = "Flex query builder beta";
 
-	constructor ( icon?: string, menu?: Menu )
+	constructor ( systrayConfig?: any, menu?: Menu )
 	{
-		this.setIcon( icon );
+		this.setIcon( systrayConfig.icon );
 		this.setMenu( menu );
 		this.tray = new Tray( this.icon );
 		this.tray.setToolTip( this.tooltip );
