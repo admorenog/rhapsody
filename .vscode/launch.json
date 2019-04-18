@@ -4,14 +4,6 @@
 	// Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
-
-		{
-			"type": "electron",
-			"request": "launch",
-			"name": "Launch Electron",
-			"appDir": "${workspaceRoot}/",
-			"sourceMaps": true
-		},
 		{
 			"name": "Debug Main Process",
 			"type": "node",
@@ -21,7 +13,12 @@
 			"windows": {
 			  "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
 			},
-			"args" : ["."]
+			"args" : ["."],
+			"internalConsoleOptions": "openOnSessionStart",
+			"sourceMaps": true,
+			"trace": true,
+            "preLaunchTask": "build",
+			"outputCapture": "std"
 		  }
 	]
 }

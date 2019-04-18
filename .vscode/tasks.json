@@ -4,38 +4,17 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "compile render ts",
+			"label": "build",
 			"type": "typescript",
-			"tsconfig": ".vscode/render/tsconfig.json",
+			"tsconfig": ".vscode/tsconfig.json",
 			"problemMatcher": [
 				"$tsc"
 			]
 		},
 		{
-			"label": "watch compile render ts",
+			"label": "watch build",
 			"type": "typescript",
-			"tsconfig": ".vscode/render/tsconfig.json",
-			"option": "watch",
-			"problemMatcher": [
-				"$tsc-watch"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
-			"label": "compile main ts",
-			"type": "typescript",
-			"tsconfig": ".vscode/main/tsconfig.json",
-			"problemMatcher": [
-				"$tsc"
-			]
-		},
-		{
-			"label": "watch compile main ts",
-			"type": "typescript",
-			"tsconfig": ".vscode/main/tsconfig.json",
+			"tsconfig": ".vscode/tsconfig.json",
 			"option": "watch",
 			"problemMatcher": [
 				"$tsc-watch"

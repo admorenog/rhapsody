@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 // import * as ElectronViewRenderer from 'electron-view-renderer';
 // import ElectronViewRenderer from 'electron-view-renderer';
-const Config_1 = require("./Config");
-const Systray_1 = require("./Systray");
-const MainMenu_1 = require("./MainMenu");
+const Config_1 = require("../app/controller/Config");
+const Systray_1 = require("../app/controller/Systray");
+const MainMenu_1 = require("../app/controller/MainMenu");
 const ElectronViewRenderer = require('electron-view-renderer');
 class Main {
     static onWindowAllClosed() {
@@ -19,7 +19,6 @@ class Main {
     }
     static onReady() {
         Main.mainWindow = new electron_1.BrowserWindow({ width: 800, height: 600 });
-        // mainWindow.loadFile('main.html');
         if (Main.config.debug) {
             Main.mainWindow.webContents.openDevTools();
         }
@@ -69,3 +68,4 @@ class Main {
     }
 }
 exports.default = Main;
+//# sourceMappingURL=Main.js.map

@@ -2,8 +2,9 @@
     "compilerOptions": {
 		"module": "commonjs",
 		"target": "es6",
-		"sourceMap": false,
-		"outDir": "../../app/js/main",
+		"sourceMap": true,
+		"rootDir": "../sources/ts",
+		"outDir": "../app/js",
 		"noEmit": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
@@ -18,7 +19,7 @@
 			"node"
 		]
 	},
-	"include": [ "../../sources/ts/main/**/*.ts" ],
+	"include": [ "../sources/ts/**/*.ts" ],
 	"exclude": [ "node_modules" ]
 
 }

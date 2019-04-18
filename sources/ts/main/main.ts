@@ -1,9 +1,12 @@
 import { app, BrowserWindow } from 'electron';
 // import * as ElectronViewRenderer from 'electron-view-renderer';
 // import ElectronViewRenderer from 'electron-view-renderer';
-import Config from './Config';
-import Systray from './Systray';
-import MainMenu from './MainMenu';
+import Config from '../app/controller/Config';
+import Systray from '../app/controller/Systray';
+import * as SystrayConfig from '../config/systray'
+
+import MainMenu from '../app/controller/MainMenu';
+
 
 const ElectronViewRenderer = require( 'electron-view-renderer' );
 
@@ -34,7 +37,6 @@ export default class Main
 	private static onReady (): void
 	{
 		Main.mainWindow = new BrowserWindow( { width: 800, height: 600 } );
-		// mainWindow.loadFile('main.html');
 
 		if ( Main.config.debug )
 		{
