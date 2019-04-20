@@ -1,11 +1,12 @@
-import { app, BrowserWindow } from 'electron';
+import { BrowserWindow } from 'electron';
 // import * as ElectronViewRenderer from 'electron-view-renderer';
 // import ElectronViewRenderer from 'electron-view-renderer';
 import Config from '../app/controller/Config';
 import Systray from '../app/controller/Systray';
-import * as SystrayConfig from '../config/systray'
 
 import MainMenu from '../app/controller/MainMenu';
+
+declare var config : Function;
 
 const ElectronViewRenderer = require( 'electron-view-renderer' );
 
@@ -37,12 +38,12 @@ export default class Main
 	{
 		Main.mainWindow = new BrowserWindow( { width: 800, height: 600 } );
 
-		if ( Config.config( 'debug' ) )
+		if ( Config.config( 'app.debug' ) )
 		{
 			Main.mainWindow.webContents.openDevTools()
 		}
 
-		Main.Tray = new Systray( SystrayConfig.config );
+		Main.Tray = new Systray( config( "systray" ) );
 
 		Main.render.load( Main.mainWindow, 'main', { ctx: Main.getContext() } );
 
@@ -81,19 +82,21 @@ export default class Main
 	private static getContext()
 	{
 		return {
-			config : this.config
+			config : config()
 		}
 	}
 
 	static main ( app: Electron.App, browserWindow: typeof BrowserWindow )
 	{
+		Config.setGlobals();
 		Main.application = app;
 		Main.BrowserWindow = browserWindow;
-		Main.config = Config.config();
 		Main.menu = Main.initMenu();
 		Main.render = Main.initRender();
 		Main.application.on( 'window-all-closed', Main.onWindowAllClosed );
 		Main.application.on( 'ready', Main.onReady );
 		Main.application.on( 'activate', Main.onActivate );
+
+		global[ "main" ] = this;
 	}
 }
