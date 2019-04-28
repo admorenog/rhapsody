@@ -9,6 +9,7 @@
 				console.log( window );
 				console.log( "---" );
 				console.log( event );
+				//TODO: poner aquí alguna subventana como preferences.
                 main.mainWindow.show();
             }},
         ]},

@@ -3,8 +3,8 @@
 		"module": "commonjs",
 		"target": "es6",
 		"sourceMap": true,
-		"rootDir": "..",
-		"outDir": "../app",
+		"rootDir": "../src",
+		"outDir": "../app/js",
 		"noEmit": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
@@ -19,7 +19,7 @@
 			"node"
 		]
 	},
-	"include": [ "../src/**/*.ts", "../core/**/*.ts" ],
-	"exclude": [ "../node_modules" ]
+	"include": [ "../sources/ts/**/*.ts" ],
+	"exclude": [ "node_modules" ]
 
 }

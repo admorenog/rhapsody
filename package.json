@@ -1,8 +1,8 @@
 {
-  "name": "flex-query-builder",
-  "version": "0.0.1",
-  "description": "SQL IDE",
-  "main": "app/js/main/App.js",
+  "name": "rhapsody",
+  "version": "0.4.5",
+  "description": "electron framework",
+  "main": "app/js/core/app.js",
   "scripts": {
     "start": "electron ."
   },

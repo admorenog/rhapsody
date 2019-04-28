@@ -23,6 +23,11 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+			"label" : "Copy templates",
+			"command" : "cp",
+			"args": [ "-Rf", "src/views/templates", "app/src/views/templates" ]
 		}
 	]
 }

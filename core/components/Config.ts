@@ -1,11 +1,10 @@
 import { app } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
-import Main from '../../main/Main';
 
 export default class Config
 {
-	public static configFolder : string = 'sources/config';
+	public static configFolder : string = 'config';
 	public static configExtension : string = '.js';
 	public static encoding : string = 'utf-8';
 	public static envfile : string = ".env";

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>FQB SQL</title>
+	<link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+
+<body>
+	<div class="window">
+		modo debug: <%= ctx.config.app.debug %>
+	</div>
+	<script>
+		var ctx = <%- JSON.stringify( ctx ) %>;
+		// You can also require other files to run in this process
+		// require('./renderer.js')
+	</script>
+</body>
+
+</html>

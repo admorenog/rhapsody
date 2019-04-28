@@ -1,6 +1,6 @@
-import { app, Menu } from 'electron';
+import { app, Menu as MainMenu } from 'electron';
 
-export default class MainMenu
+export default class Menu
 {
 	public name : string;
 	public template : any = [
@@ -96,7 +96,7 @@ export default class MainMenu
 			]
 		}
 	];
-	public menu : Menu;
+	public menu : MainMenu;
 	constructor()
 	{
 		if ( process.platform === 'darwin' )
@@ -177,7 +177,7 @@ export default class MainMenu
 				}
 			]
 		}
-		this.menu = Menu.buildFromTemplate( this.template );
-		Menu.setApplicationMenu( this.menu );
+		this.menu = MainMenu.buildFromTemplate( this.template );
+		MainMenu.setApplicationMenu( this.menu );
 	}
 }

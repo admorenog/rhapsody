@@ -31,6 +31,7 @@ export default class Systray
 	{
 		if ( menu == null )
 		{
+			// TODO: cambiar esto por algo por defecto como un about Rhapsody
 			this.menu = Menu.buildFromTemplate( [
 				{ label: 'Item1', type: 'radio' },
 				{ label: 'Item2', type: 'radio' },
