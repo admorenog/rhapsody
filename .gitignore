@@ -1,4 +1,4 @@
 node_modules
-app/js
-app/css
+app
+dist
 .env

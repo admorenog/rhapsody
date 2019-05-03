@@ -28,6 +28,11 @@
 			"label" : "Copy templates",
 			"command" : "cp",
 			"args": [ "-Rf", "src/views/templates", "app/src/views/templates" ]
+		},
+		{
+			"label" : "Clear compiled",
+			"command" : "rm",
+			"args" : [ "-Rf", "app" ]
 		}
 	]
 }
