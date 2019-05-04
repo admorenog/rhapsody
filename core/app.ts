@@ -2,4 +2,4 @@
 import { app, BrowserWindow } from 'electron';
 import Kernel from './kernel';
 
-Kernel.main( app, BrowserWindow );
+Kernel.bootstrap( app );

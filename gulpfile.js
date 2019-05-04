@@ -1,4 +1,5 @@
 const gulp = require( 'gulp' );
+const livereload = require( 'gulp-livereload' );
 const del = require( 'del' );
 const ts = require( 'gulp-typescript' );
 const sass = require( 'gulp-sass' );
@@ -74,8 +75,9 @@ function tsTranspile ( cb )
 
 exports.watch = function ( cb )
 {
+	//livereload( { start : true } );
 	gulp.watch(
-		[ 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
+		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
 		gulp.series( jsClean, tsTranspile )
 	);
 	gulp.watch(

@@ -17,7 +17,6 @@
 			"internalConsoleOptions": "openOnSessionStart",
 			"sourceMaps": true,
 			"trace": true,
-            "preLaunchTask": "build",
 			"outputCapture": "std"
 		  }
 	]

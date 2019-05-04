@@ -16,7 +16,11 @@
 		var ctx = <%- JSON.stringify( ctx ) %>;
 		// You can also require other files to run in this process
 		// require('./renderer.js')
+
 	</script>
+	<% if ( ctx.config.app.debug ) { %>
+		<script src="http://localhost:35729/livereload.js"></script>
+	<% } %>
 </body>
 
 </html>
