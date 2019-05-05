@@ -1,4 +1,5 @@
 const gulp = require( 'gulp' );
+const notify = require( 'gulp-notify' );
 const livereload = require( 'gulp-livereload' );
 const del = require( 'del' );
 const ts = require( 'gulp-typescript' );
@@ -16,12 +17,12 @@ function jsClean ( cb )
 	return del( [ 'app/**/*.js' ], cb );
 }
 
-function templatesClean( cb )
+function templatesClean ( cb )
 {
 	return del( [ 'app/src/views/templates' ], cb );
 }
 
-function cssClean( cb )
+function cssClean ( cb )
 {
 	return del( [ 'app/src/views/styles' ], cb );
 }
@@ -30,7 +31,12 @@ function sassTranspile ( cb )
 {
 	gulp.src( './src/views/styles/app.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
-		.pipe( gulp.dest( './app/src/views/styles' ) );
+		.pipe( gulp.dest( './app/src/views/styles' ) )
+		.pipe(  notify( {
+			title: "Sass compiled.",
+			message: "Sass compiled.",
+			onLast : true
+		} ) );
 	cb();
 }
 
@@ -55,7 +61,13 @@ function publish ( cb )
 function templatesCopy ( cb )
 {
 	gulp.src( 'src/views/templates/**/*' )
-		.pipe( gulp.dest( 'app/src/views/templates' ) );
+		.pipe( gulp.dest( 'app/src/views/templates' ) )
+		.pipe( notify( {
+			title: "Templates compiled.",
+			message: "Templates compiled.",
+			onLast : true
+		} )
+	);
 	cb();
 }
 
@@ -69,7 +81,13 @@ function tsTranspile ( cb )
 
 	tsResult.js
 		.pipe( sourcemaps.write() )
-		.pipe( gulp.dest( tsProject.options.outDir ) );
+		.pipe( gulp.dest( tsProject.options.outDir ) )
+		.pipe( notify( {
+			title: "Typescript compiled.",
+			message: "Typescript compiled.",
+			onLast : true
+		} )
+	);
 	cb();
 };
 

@@ -1,11 +1,12 @@
+import WindowRenderers from "./WindowRenderers";
+
+declare var windows: WindowRenderers;
 export default class WindowRenderer
 {
-	private name: string;
 	public window: Electron.BrowserWindow;
 
-	constructor ( name: string, window: Electron.BrowserWindow )
+	constructor ( window: Electron.BrowserWindow )
 	{
-		this.name = name;
 		this.window = window;
 	}
 
@@ -16,7 +17,7 @@ export default class WindowRenderer
 
 	public hide()
 	{
-		//this.window.hide();
+		this.window.hide();
 	}
 
 	public deleteOnClosed()
@@ -27,7 +28,13 @@ export default class WindowRenderer
 	public onClosed()
 	{
 		this.window = null;
-		this.name = null;
 	}
 
+	public setCustomOptions( options: any )
+	{
+		if( options.onReady )
+		{
+			this.window.on( 'ready-to-show', options.onReady );
+		}
+	}
 }

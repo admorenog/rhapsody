@@ -11,13 +11,17 @@ export default class WindowRenderers
 	constructor()
 	{
 		WindowRenderers.initRender();
+		global[ "windows" ] = this;
 	}
 
-	public add ( name: string, window: BrowserWindow )
+	public add ( name: string, options: object )
 	{
-		this.windows[ name ] = new WindowRenderer( name, window );
+		this.windows[ name ] = new WindowRenderer(
+			new BrowserWindow( options )
+		);
 		this.windows[ name ].showOnReady();
 		this.windows[ name ].deleteOnClosed();
+		this.windows[ name ].setCustomOptions( options );
 	}
 
 	public get ( name: string )
@@ -30,19 +34,15 @@ export default class WindowRenderers
 		let windowRenderer : WindowRenderer = this.get( name );
 		let window = windowRenderer.window;
 
-		if( vars )
-		{
-			// this.window.loadURL( "app/src/views/templates/test.html" );
-			WindowRenderers.render.load( window, name, vars );
-		}
-		else
-		{
-			WindowRenderers.render.load( window, name );
-		}
+		WindowRenderers.render.load( window, name, vars );
+
 		if ( config( 'app.debug' ) )
 		{
 			window.webContents.openDevTools();
 		}
+
+		window.on( 'closed', windowRenderer.onClosed );
+		window.on( 'ready-to-show', window.show );
 	}
 
 	private static initRender()
@@ -53,7 +53,7 @@ export default class WindowRenderers
 				viewPath: 'app/src/views/templates',
 				viewProtcolName: 'view',
 				useAssets: true,
-				assetsPath: 'resources',
+				assetsPath: 'app/src/views',
 				assetsProtocolName: 'asset'
 			} );
 			this.render.use( 'ejs' );
