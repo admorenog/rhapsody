@@ -14,7 +14,7 @@ function clean ( cb )
 
 function jsClean ( cb )
 {
-	return del( [ 'app/**/*.js' ], cb );
+	return del( [ 'app/**/*.js*' ], cb );
 }
 
 function templatesClean ( cb )
@@ -91,6 +91,7 @@ function tsTranspile ( cb )
 	cb();
 };
 
+
 exports.watch = function ( cb )
 {
 	//livereload( { start : true } );
@@ -98,6 +99,7 @@ exports.watch = function ( cb )
 		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
 		gulp.series( jsClean, tsTranspile )
 	);
+
 	gulp.watch(
 		[ 'src/views/templates/**/*' ],
 		gulp.series( templatesClean, templatesCopy )

@@ -1,5 +1,5 @@
 import WindowRenderer from './WindowRenderer';
-const ElectronViewRenderer = require( 'electron-view-renderer' );
+import Renderer from '../views/Render'
 import { BrowserWindow } from 'electron';
 declare var config: Function;
 
@@ -49,7 +49,7 @@ export default class WindowRenderers
 	{
 		if( !this.render )
 		{
-			this.render = new ElectronViewRenderer( {
+			this.render = new Renderer( {
 				viewPath: 'app/src/views/templates',
 				viewProtcolName: 'view',
 				useAssets: true,
