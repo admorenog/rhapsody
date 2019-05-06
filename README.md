@@ -2,7 +2,7 @@
 A framework that uses typescript, sass and ejs templates to make projects easily.
 
 # Disclaimer
-Please, don't use this for real projects because is not finish yet. :sweat_smile:
+Please, don't use this for real projects because is not finished yet. :sweat_smile:
 
 
 # Requirements
@@ -14,12 +14,17 @@ Please, don't use this for real projects because is not finish yet. :sweat_smile
 # Setup
 
 - First of all we need to download the project
+
+```bash
 git clone https://github.com/admorenog/rhapsody.git
+```
 
 - Then we need to download the node packages
+
 ```bash
 npm install
 ```
+
 	Dont' worry about the sass vulnerabilities, these packages are used only in development mode and I hope they can fix it soon.
 
 - Then we need to create our .env file, you can rename the .env.example to .env and change the parameters.
