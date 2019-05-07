@@ -1,7 +1,8 @@
+/// <reference path="../Globals.d.ts" />
+
 import WindowRenderer from './WindowRenderer';
 import Renderer from '../views/Render'
 import { BrowserWindow } from 'electron';
-declare var config: Function;
 
 export default class WindowRenderers
 {
@@ -36,7 +37,7 @@ export default class WindowRenderers
 
 		WindowRenderers.render.load( window, name, vars );
 
-		if ( config( 'app.debug' ) )
+		if ( config( 'app' )[ "debug" ] )
 		{
 			window.webContents.openDevTools();
 		}

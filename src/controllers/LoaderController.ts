@@ -1,4 +1,3 @@
-/// <reference path="../../core/system/globals.ts" />
 import Controller from '../../core/system/controllers/Controller'
 
 class LoaderController extends Controller

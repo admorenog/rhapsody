@@ -16,13 +16,13 @@ export default class Config
 		Config.loadConfigVars();
 		if( configValue !== undefined )
 		{
-			eval( 'Config.configVars.' + configVar + ' = configValue' );
+			Config.configVars[ configVar ] = configValue;
 		}
 
 		let configToReturn = null;
 		if( configVar !== undefined )
 		{
-			configToReturn = eval( 'Config.configVars.' + configVar );
+			configToReturn = Config.configVars[ configVar ];
 		}
 		else
 		{

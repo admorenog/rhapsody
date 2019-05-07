@@ -1,23 +1,21 @@
+/// <reference path="./system/Globals.d.ts" />
+
 import { app } from 'electron';
 import WindowRenderers from './system/windows/WindowRenderers';
-import WindowRenderer from './system/windows/WindowRenderer';
 import Config from './components/Config';
 import Systray from './components/Systray';
 import Menu from './components/Menu';
 import Router from './system/routes/Router';
+import Controller from './system/controllers/Controller';
+import Renderer from './system/views/Render';
 
-declare var config: Function;
-declare var kernel: typeof Kernel;
-declare var window: WindowRenderer;
-declare var windows: WindowRenderers;
 
 export default class Kernel
 {
 	static windows: WindowRenderers;
 	static menu: Menu;
 	static systray: Systray;
-	static config: Config;
-	static render: any;
+	static render: Renderer;
 
 	private static onWindowAllClosed (): void
 	{
@@ -29,15 +27,12 @@ export default class Kernel
 
 	private static onReady (): void
 	{
-		// TODO: cargar las start_views mediante el Router
+		let views = config( "app" )[ "start_views" ];
 
-		global[ "view" ] = function( window, view, vars )
+		for( let idxView in views )
 		{
-			Kernel.windows.add( view, window );
-			Kernel.windows.load( view, vars );
+			Router.route( views[ idxView ] );
 		}
-		Router.route( "load@LoaderController" );
-		Router.route( "index@MainController" );
 
 		Kernel.systray = new Systray( config( "systray" ) );
 	}
@@ -69,6 +64,7 @@ export default class Kernel
 	{
 		global[ "kernel" ] = this;
 		global[ "app" ] = app;
+		global[ "view" ] = Controller.view;
 		Config.setGlobals();
 	}
 
