@@ -10,6 +10,9 @@ class LoaderController extends Controller
 			frame: false, alwaysOnTop: true, show: false,
 			webPreferences: { nodeIntegration: false, contextIsolation: true }
 		};
-		return view( window, 'load/loader' );
+		let vars = null;
+		return view( window, 'load/loader', vars );
 	}
 }
+
+module.exports = LoaderController;

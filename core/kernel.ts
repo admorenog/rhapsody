@@ -4,6 +4,7 @@ import WindowRenderer from './system/windows/WindowRenderer';
 import Config from './components/Config';
 import Systray from './components/Systray';
 import Menu from './components/Menu';
+import Router from './system/routes/Router';
 
 declare var config: Function;
 declare var kernel: typeof Kernel;
@@ -29,22 +30,14 @@ export default class Kernel
 	private static onReady (): void
 	{
 		// TODO: cargar las start_views mediante el Router
-		Kernel.windows.add( "load/loader", {
-			width: 350, height: 400,
-			frame: false, alwaysOnTop: true, show: false,
-			webPreferences: { nodeIntegration: false, contextIsolation: true }
-		} );
 
-		Kernel.windows.add( "main", { width: 800, height: 600, show: false,
-			webPreferences: { nodeIntegration: false, contextIsolation: true },
-			onReady: ( event ) => {
-				windows.get( "load/loader" ).hide();
-				//setTimeout( () => { windows.get( "load/loader" ).hide(); }, 2000 );
-			}
-		} );
-
-		Kernel.windows.load( "load/loader" );
-		Kernel.windows.load( "main", { ctx : Kernel.getContext() } );
+		global[ "view" ] = function( window, view, vars )
+		{
+			Kernel.windows.add( view, window );
+			Kernel.windows.load( view, vars );
+		}
+		Router.route( "load@LoaderController" );
+		Router.route( "index@MainController" );
 
 		Kernel.systray = new Systray( config( "systray" ) );
 	}

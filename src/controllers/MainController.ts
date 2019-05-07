@@ -5,6 +5,15 @@ class MainController extends Controller
 {
 	public index()
 	{
-		return view( 'main' );
+		let window = { width: 800, height: 600, show: false,
+			webPreferences: { nodeIntegration: false, contextIsolation: true },
+			onReady: ( event ) => {
+				kernel.windows.get( "load/loader" ).hide();
+				//setTimeout( () => { windows.get( "load/loader" ).hide(); }, 2000 );
+			}
+		};
+		let vars = { ctx : kernel.getContext() };
+		return view( window, 'main', vars );
 	}
 }
+module.exports = MainController;
