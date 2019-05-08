@@ -70,6 +70,7 @@ export default class Kernel
 
 	static bootstrap ()
 	{
+		// app[ "setAppPath" ](process.cwd());
 		Kernel.setGlobals();
 		Kernel.menu = Kernel.initMenu();
 		Kernel.windows = new WindowRenderers();

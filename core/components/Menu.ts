@@ -102,6 +102,7 @@ export default class Menu
 		if ( process.platform === 'darwin' )
 		{
 			this.name = app.getName();
+			console.log( this.name );
 			this.template.unshift( {
 				label: this.name,
 				submenu: [

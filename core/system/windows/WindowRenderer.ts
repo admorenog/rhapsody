@@ -12,12 +12,22 @@ export default class WindowRenderer
 
 	public showOnReady()
 	{
-		this.window.on( 'ready-to-show', this.window.show );
+		//this.window.on( 'ready-to-show', this.window.show );
 	}
 
 	public hide()
 	{
 		this.window.hide();
+	}
+
+	public show()
+	{
+		this.window.show();
+	}
+
+	public setOpacity( opacity )
+	{
+		this.window.setOpacity( opacity );
 	}
 
 	public deleteOnClosed()

@@ -43,7 +43,7 @@ export default class WindowRenderers
 		}
 
 		window.on( 'closed', windowRenderer.onClosed );
-		window.on( 'ready-to-show', window.show );
+		//window.on( 'ready-to-show', window.show );
 	}
 
 	private static initRender()

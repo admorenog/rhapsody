@@ -59,7 +59,7 @@ export default class Config
 			let configFolder: string = (
 				app.getAppPath() + path.sep +
 				Config.configFolder + path.sep
-			);
+			).replace( /Resources\/app\.asar\//g , "" );
 			let configFiles = fs.readdirSync( configFolder );
 
 			this.configVars = {};
@@ -86,6 +86,7 @@ export default class Config
 		if( this.envVars === undefined )
 		{
 			let fullname: string = app.getAppPath() + path.sep + Config.envfile;
+			fullname = fullname.replace( /Resources\/app\.asar\//g , "" );
 			let envVars = JSON.parse( fs.readFileSync( fullname, Config.encoding ) );
 			this.envVars = envVars;
 		}
