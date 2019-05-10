@@ -1,6 +1,6 @@
 import Controller from '../../core/system/controllers/Controller'
 
-class MainController extends Controller
+export default class MainController extends Controller
 {
 	public index()
 	{
@@ -36,4 +36,3 @@ class MainController extends Controller
 		return view( window, 'main', vars );
 	}
 }
-module.exports = MainController;

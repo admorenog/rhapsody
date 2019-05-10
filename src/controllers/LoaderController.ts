@@ -1,6 +1,6 @@
 import Controller from '../../core/system/controllers/Controller'
 
-class LoaderController extends Controller
+export default class LoaderController extends Controller
 {
 	public load()
 	{
@@ -17,5 +17,3 @@ class LoaderController extends Controller
 		return view( window, 'load/loader', vars );
 	}
 }
-
-module.exports = LoaderController;

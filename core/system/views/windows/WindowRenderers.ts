@@ -1,7 +1,7 @@
-/// <reference path="../Globals.d.ts" />
+/// <reference path="../../Globals.d.ts" />
 
 import WindowRenderer from './WindowRenderer';
-import Renderer from '../views/Render'
+import Renderer from '../Render'
 import { BrowserWindow } from 'electron';
 
 export default class WindowRenderers

@@ -9,7 +9,7 @@ export default class Router
 
 		import( "../../../src/controllers/" + className ).then( controllerClass =>
 		{
-			let controllerObject = new controllerClass();
+			let controllerObject = new controllerClass.default();
 			controllerObject[ methodName ]();
 		});
 	}
