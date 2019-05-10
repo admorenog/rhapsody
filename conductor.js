@@ -1,18 +1,21 @@
 #!/usr/local/bin/node
 
 "use strict";
-const kernel = require("./app/core/kernel");
+const kernel = require( "./app/core/kernel" ).default;
+const repl = require( "./app/core/system/console/repl" ).default;
 
 /**
  * We need to bootstrap the same app, but instead calling the electron window
  * manager we going to call our console manager.
  */
 
-kernel.default.bootstrap();
+kernel.bootstrap();
 
 let args = null;
 let argc = 0;
-kernel.default.consoleManager( args, argc );
+
+var console = new repl();
+console.consoleManager( args, argc );
 
 /*
 var builder = require( 'electron-builder' );

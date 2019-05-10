@@ -1,7 +1,6 @@
 /// <reference path="./system/Globals.d.ts" />
 
 import { app } from 'electron';
-import * as readline from 'readline';
 import WindowRenderers from './system/views/windows/WindowRenderers';
 import Config from './components/Config';
 import Systray from './components/Systray';
@@ -78,68 +77,6 @@ export default class Kernel
 		app.on( 'activate', Kernel.onActivate );
 	}
 
-	static consoleManager ()
-	{
-		let rl = readline.createInterface( {
-			input: process.stdin,
-			output: process.stdout
-		} );
-
-		Kernel.consoleLoop( rl );
-	}
-
-	static async consoleLoop( rl )
-	{
-		var keepOpen : boolean = true;
-		while( keepOpen )
-		{
-			await Kernel.processCli( rl )
-				.catch( ()=>{
-					keepOpen = false;
-					rl.close();
-				} );
-		}
-	}
-
-	static processCli ( rl: readline.Interface ) : Promise<object>
-	{
-		return new Promise( ( resolve, reject ) =>
-		{
-			rl.question( '>>> ', ( response ) =>
-			{
-				var keepOpen = Kernel.processCliResponse( response );
-				if( keepOpen )
-				{
-					resolve();
-				}
-				else
-				{
-					reject();
-				}
-			} );
-		} );
-	}
-
-	static processCliResponse ( response: string ): boolean
-	{
-		if ( response == "quit" || response == "exit" )
-		{
-			console.log( "Bye!" );
-			return false;
-		}
-		else
-		{
-			try
-			{
-				console.log( eval.apply( this, [ response ] ) );
-			}
-			catch ( error )
-			{
-				console.error( error.message );
-			}
-			return true;
-		}
-	}
 
 	static bootstrap ()
 	{
