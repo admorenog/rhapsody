@@ -8,6 +8,7 @@ import Menu from './components/Menu';
 import Router from './system/routes/Router';
 import Controller from './system/controllers/Controller';
 import Renderer from './system/views/Render';
+import Commands from './system/console/repl/Commands';
 
 
 export default class Kernel
@@ -65,6 +66,7 @@ export default class Kernel
 		global[ "kernel" ] = this;
 		global[ "app" ] = app;
 		global[ "view" ] = Controller.view;
+		global[ "conductor" ] = Commands;
 		Config.setGlobals();
 	}
 
@@ -80,6 +82,7 @@ export default class Kernel
 
 	static bootstrap ()
 	{
+		Commands.register();
 		Kernel.setGlobals();
 	}
 

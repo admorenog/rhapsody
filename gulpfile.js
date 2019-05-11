@@ -87,10 +87,18 @@ function tsTranspile ( cb )
 			message: "Typescript compiled.",
 			onLast : true
 		} )
+		.on( 'error', reportError )
 	);
 	cb();
 };
 
+function reportError( error )
+{
+	notify( {
+		title: "Error",
+		message: error.plugin
+	} );
+}
 
 exports.watch = function ( cb )
 {

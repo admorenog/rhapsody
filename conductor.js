@@ -1,8 +1,21 @@
 #!/usr/local/bin/node
 
+/**
+ * This utility can be used to build our app faster with commands:
+ * you can make controllers, views, models, custom commands, build
+ * and other things with this utility (conductor).
+ *
+ * Also you can use a repl with the bootstrap of the application to
+ * tinkering or debugging your application.
+ *
+ * Please, do not modify this file, this is part of the kernel and it
+ * should works modifiying the src folder of your application.
+ */
+
 "use strict";
+
 const kernel = require( "./app/core/kernel" ).default;
-const repl = require( "./app/core/system/console/repl" ).default;
+const Console = require( "./app/core/system/console/Console" ).default;
 
 /**
  * We need to bootstrap the same app, but instead calling the electron window
@@ -11,11 +24,10 @@ const repl = require( "./app/core/system/console/repl" ).default;
 
 kernel.bootstrap();
 
-let args = null;
-let argc = 0;
+let argv = process.argv;
 
-var console = new repl();
-console.consoleManager( args, argc );
+var console = new Console( argv );
+console.consoleManager();
 
 /*
 var builder = require( 'electron-builder' );
