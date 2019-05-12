@@ -8,7 +8,7 @@ import EditCommand from './commands/EditCommand';
 
 export default class Commands
 {
-	static commands: typeof Command[] = [ ];
+	private static commands: typeof Command[] = [];
 
 	static register (): void
 	{
@@ -17,11 +17,21 @@ export default class Commands
 		 * give us problems when is compiled (giving to the final
 		 * user the possibility to read our commands easily).
 		 */
-		Commands.commands.push( ExitCommand );
-		Commands.commands.push( HelpCommand );
-		Commands.commands.push( SaveCommand );
-		Commands.commands.push( LoadCommand );
-		Commands.commands.push( EditCommand );
+		Commands.add( ExitCommand );
+		Commands.add( HelpCommand );
+		Commands.add( SaveCommand );
+		Commands.add( LoadCommand );
+		Commands.add( EditCommand );
+	}
+
+	public static add ( command: typeof Command )
+	{
+		Commands.commands.push( command );
+	}
+
+	public static all () : typeof Command[]
+	{
+		return Commands.commands;
 	}
 
 	static execute ( sentence: string ): boolean

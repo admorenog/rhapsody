@@ -1,4 +1,5 @@
 import Controller from '../../core/system/controllers/Controller'
+import Graph from '../models/Graph'
 
 export default class MainController extends Controller
 {
@@ -32,7 +33,9 @@ export default class MainController extends Controller
 			}
 		};
 
-		let vars = { ctx : kernel.getContext() };
+		let graphInfo = new Graph();
+
+		let vars = { ctx : kernel.getContext(), graphInfo : graphInfo.get() };
 		return view( window, 'main', vars );
 	}
 }

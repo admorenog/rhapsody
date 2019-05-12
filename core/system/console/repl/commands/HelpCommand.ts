@@ -7,9 +7,10 @@ export default class HelpCommand extends Command
 	static desc = "Shows this help page or explain with more detail the specified command.";
 	static fn = ( args ) =>
 	{
-		for( let idxCommand in Commands.commands )
+		let commands = Commands.all();
+		for( let idxCommand in commands )
 		{
-			console.log( Commands.commands[ idxCommand ].cmd, Commands.commands[ idxCommand ].desc );
+			console.log( commands[ idxCommand ].cmd, commands[ idxCommand ].desc );
 		}
 		return true;
 	}

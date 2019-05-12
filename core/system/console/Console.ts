@@ -70,6 +70,7 @@ export default class Console
 				{
 					keepOpen = false;
 					rl.close();
+					process.exit( 0 );
 				} );
 		}
 	}
@@ -80,7 +81,7 @@ export default class Console
 		{
 			rl.question( '>>> ', ( response ) =>
 			{
-				var keepOpen = this.processCliResponse( response );
+				var keepOpen = Console.processCliResponse( response );
 				if ( keepOpen )
 				{
 					resolve();
@@ -93,9 +94,9 @@ export default class Console
 		} );
 	}
 
-	processCliResponse ( response: string ): boolean
+	public static processCliResponse ( response: string ): boolean
 	{
-		if( this.isCommand( response ) )
+		if( Console.isCommand( response ) )
 		{
 			return Commands.execute( response );
 		}
@@ -103,7 +104,7 @@ export default class Console
 		{
 			try
 			{
-				console.log( eval.apply( this, [ response ] ) );
+				console.log( "<<<", eval.apply( this, [ response ] ) );
 			}
 			catch ( error )
 			{
@@ -113,7 +114,7 @@ export default class Console
 		}
 	}
 
-	isCommand( command : string )
+	static isCommand( command : string )
 	{
 		return ( command.charAt( 0 ) == "." );
 	}

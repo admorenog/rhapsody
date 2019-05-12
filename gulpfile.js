@@ -1,3 +1,5 @@
+#!/usr/local/bin/node
+
 const gulp = require( 'gulp' );
 const notify = require( 'gulp-notify' );
 const livereload = require( 'gulp-livereload' );
@@ -82,13 +84,17 @@ function tsTranspile ( cb )
 	tsResult.js
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( tsProject.options.outDir ) )
-		.pipe( notify( {
-			title: "Typescript compiled.",
-			message: "Typescript compiled.",
-			onLast : true
-		} )
-		.on( 'error', reportError )
-	);
+		.pipe(
+			notify( {
+				title: "Typescript compiled.",
+				message: "Typescript compiled.",
+				onLast: true
+			} )
+		)
+		.on( 'error', ( error ) => {
+			console.log( "error" );
+			return notify().write(err);
+		} );
 	cb();
 };
 
