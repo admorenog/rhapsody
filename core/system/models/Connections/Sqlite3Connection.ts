@@ -1,16 +1,31 @@
-import sqlite3 from 'sqlite3';
+import { verbose, sqlite3, Database } from 'sqlite3';
 import Connection from "./Connection";
 
 export default class Sqlite3Connection implements Connection
 {
-	private connector: sqlite3.sqlite3;
+	private connector: sqlite3;
+	private databaseConn: Database;
+	private database : string;
+
 	constructor ()
 	{
-		this.connector = sqlite3.verbose();
+		this.connector = verbose();
 	}
 
-	public database ( database : string )
+	public getDatabaseConnection ( database: string ) : Database
 	{
-		return new this.connector.Database( database );
+		this.database = database;
+		this.databaseConn = this.databaseConn != null
+			? this.databaseConn
+			: new this.connector.Database( database );
+
+		return this.databaseConn;
+	}
+
+	public close() : void
+	{
+		this.databaseConn.close( () => {
+			throw new Error( `Cannot connecto to ${this.database}.` );
+		});
 	}
 }

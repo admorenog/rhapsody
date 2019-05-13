@@ -3,17 +3,20 @@ import Connection from "../Connections/Connection";
 
 export default class DriverManager
 {
-	private static connections : {};
-	public static createNewConnection( driver : string ) : Connection
+	private static connections: {};
+	public static getConnection ( driver: string ): Connection
 	{
-		let connection = DriverManager.connections[ driver ] || null;
+		let connections = DriverManager.connections;
+		let connection = connections != undefined
+			? connections[ driver ] || null
+			: null;
 
-		if( connection == null )
+		if ( connection == null )
 		{
-			switch( driver )
+			switch ( driver )
 			{
-				case "sqlite" : connection = Sqlite3.createConnection(); break;
-				default : throw new Error( `Driver ${driver} not found.` );
+				case "sqlite": connection = Sqlite3.getConnection(); break;
+				default: throw new Error( `Driver ${ driver } not found.` );
 			}
 		}
 

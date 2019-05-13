@@ -8,7 +8,7 @@
 			"type": "node",
 			"request": "launch",
 			"name": "debug conductor",
-			"program": "${workspaceFolder}/orchestra.js",
+			"program": "${workspaceFolder}/conductor.js",
 			"console": "integratedTerminal"
 		},
 		{

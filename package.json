@@ -35,6 +35,7 @@
 		"del": "^4.1.1",
 		"electron": "^4.2.0",
 		"electron-builder": "^20.39.0",
+		"electron-rebuild": "^1.8.4",
 		"gulp": "^4.0.1",
 		"gulp-livereload": "^4.0.1",
 		"gulp-notify": "^3.2.0",
