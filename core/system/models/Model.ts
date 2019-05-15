@@ -1,3 +1,5 @@
+/// <reference path="../Globals.d.ts" />
+
 import DriverManager from "./Drivers/DriverManager";
 import Connection from "./Connections/Connection";
 import { Database } from "sqlite3";
@@ -10,21 +12,23 @@ export default abstract class Model
 	protected abstract databaseName: string;
 	protected abstract tableName: string;
 
-	public async get ( columns?: string[] ) : Promise<any[]>
+	public async get ( columns?: string[] ): Promise<any[]>
 	{
 		let database = this.getDatabaseConnection( this.databaseName );
 		let result = [];
-		return new Promise( (resolve, reject) => {
+		return new Promise( ( resolve, reject ) =>
+		{
 			database.each( `SELECT * FROM ${ this.tableName }`, ( err: any, row: any ) =>
 			{
-				if( err ) { reject( err ); }
+				if ( err ) { reject( err ); }
 				result.push( row );
 			},
-			( err, count ) => {
-				if( err ) { reject( err ); }
-				resolve( result );
-			} );
-		});
+				( err, count ) =>
+				{
+					if ( err ) { reject( err ); }
+					resolve( result );
+				} );
+		} );
 	}
 
 	private getConnection (): Connection

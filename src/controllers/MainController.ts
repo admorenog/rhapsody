@@ -3,29 +3,33 @@ import Graph from '../models/Graph'
 
 export default class MainController extends Controller
 {
-	public index()
+	public index ()
 	{
-		let window = { width: 800, height: 600, show: false, transparent : false,
-			opacity : 0, title : "Rhapsody",
+		let window = {
+			width: 800, height: 600, show: false, transparent: false,
+			opacity: 0, title: "Rhapsody",
 			webPreferences: { nodeIntegration: false, contextIsolation: true },
-			onReady: ( event ) => {
+			onReady: ( event ) =>
+			{
 				//kernel.windows.get( "main" ).hide();
 				kernel.windows.get( "main" ).show();
 
 				showSlowly( "load/loader", 0 );
-				setTimeout( function() {
+				setTimeout( function ()
+				{
 					kernel.windows.get( "load/loader" ).hide();
 					kernel.windows.get( "main" ).show();
 					showSlowly( "main", 0 );
 				}, 5000 );
 
-				function showSlowly( view, opacity )
+				function showSlowly ( view, opacity )
 				{
 					opacity += 0.01
 					kernel.windows.get( view ).setOpacity( opacity );
-					if( opacity < 1 )
+					if ( opacity < 1 )
 					{
-						setTimeout( () => {
+						setTimeout( () =>
+						{
 							showSlowly( view, opacity );
 						}, 5 );
 					}

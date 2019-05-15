@@ -1,12 +1,12 @@
 #!/usr/local/bin/node
 
 const gulp = require( 'gulp' );
-const notify = require( 'gulp-notify' );
 const livereload = require( 'gulp-livereload' );
 const del = require( 'del' );
 const ts = require( 'gulp-typescript' );
 const sass = require( 'gulp-sass' );
 const sourcemaps = require( 'gulp-sourcemaps' );
+const notifier = require( 'node-notifier' );
 
 function clean ( cb )
 {
@@ -33,12 +33,13 @@ function sassTranspile ( cb )
 {
 	gulp.src( './src/views/styles/app.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
-		.pipe( gulp.dest( './app/src/views/styles' ) )
-		.pipe(  notify( {
-			title: "Sass compiled.",
-			message: "Sass compiled.",
-			onLast : true
-		} ) );
+		.pipe( gulp.dest( './app/src/views/styles' ) );
+
+	notifier.notify( {
+		title: "Sass compiled.",
+		message: "Sass compiled."
+	} );
+
 	cb();
 }
 
@@ -63,13 +64,11 @@ function publish ( cb )
 function templatesCopy ( cb )
 {
 	gulp.src( 'src/views/templates/**/*' )
-		.pipe( gulp.dest( 'app/src/views/templates' ) )
-		.pipe( notify( {
-			title: "Templates compiled.",
-			message: "Templates compiled.",
-			onLast : true
-		} )
-	);
+		.pipe( gulp.dest( 'app/src/views/templates' ) );
+	notifier.notify( {
+		title: "Templates compiled.",
+		message: "Templates compiled."
+	} );
 	cb();
 }
 
@@ -79,30 +78,35 @@ function tsTranspile ( cb )
 
 	var tsResult = tsProject.src()
 		.pipe( sourcemaps.init() )
-		.pipe( tsProject() );
+		.pipe( tsProject() )
+		.on( 'error', reportError );
 
 	tsResult.js
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( tsProject.options.outDir ) )
-		.pipe(
-			notify( {
-				title: "Typescript compiled.",
-				message: "Typescript compiled.",
-				onLast: true
-			} )
-		)
-		.on( 'error', ( error ) => {
-			console.log( "error" );
-			return notify().write(err);
-		} );
+		.on( 'error', reportError );
+	notifier.notify( {
+		title: "Typescript transpiled",
+		message: "Typescript transpiled",
+		icon: './core/components/gulp/gulp.png'
+	} );
 	cb();
 };
 
+function showMessage()
+{
+	notifier.notify( {
+		title: "Message",
+		message: "test"
+	} );
+}
+
 function reportError( error )
 {
-	notify( {
-		title: "Error",
-		message: error.plugin
+	notifier.notify( {
+		title: error.message,
+		message: error.stack,
+		icon: './core/components/gulp/error.png'
 	} );
 }
 

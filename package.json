@@ -26,7 +26,8 @@
 		"haml": "^0.4.3",
 		"pug": "^2.0.0-rc.2",
 		"sqlite3": "^4.0.8",
-		"typescript": "^3.4.5"
+		"typescript": "^3.4.5",
+		"node-notifier": "^5.4.0"
 	},
 	"devDependencies": {
 		"@types/node": "^11.13.10",
@@ -38,7 +39,6 @@
 		"electron-rebuild": "^1.8.4",
 		"gulp": "^4.0.1",
 		"gulp-livereload": "^4.0.1",
-		"gulp-notify": "^3.2.0",
 		"gulp-sass": "^4.0.2",
 		"gulp-sourcemaps": "^2.6.5",
 		"gulp-typescript": "^5.0.1",
