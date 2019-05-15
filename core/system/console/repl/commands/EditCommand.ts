@@ -7,6 +7,8 @@ import Console from '../../Console';
 
 export default class EditCommand extends Command
 {
+	static repl = true;
+	static conductor = false;
 	static cmd = ".edit";
 	static desc = "Open an external editor and load the script on save.";
 	static fn = ( args ) =>

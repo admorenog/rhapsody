@@ -14,6 +14,7 @@ export default abstract class Model
 
 	public async get ( columns?: string[] ): Promise<any[]>
 	{
+		// TODO: we need to create a query builder that pipe the methods.
 		let database = this.getDatabaseConnection( this.databaseName );
 		let result = [];
 		return new Promise( ( resolve, reject ) =>

@@ -1,5 +1,6 @@
 # TO·DO
 - Models (ws, redis, database, json files, etc)
+	- Make a query builder...
 
 - Assets folder unique between styles and images.
 

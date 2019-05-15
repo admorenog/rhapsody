@@ -3,3 +3,4 @@ app
 dist
 .env
 .DS_Store
+storage/cache/*

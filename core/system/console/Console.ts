@@ -1,5 +1,6 @@
 import * as readline from 'readline';
 import Commands from './repl/Commands';
+import Autoload from '../autoload/autoload';
 
 /**
  * Read, eval, print and loop
@@ -41,6 +42,19 @@ export default class Console
 		{
 			this.openRepl();
 		}
+		else
+		{
+			this.findCommand( this.argv );
+		}
+	}
+
+	findCommand ( argv: string[] )
+	{
+		//TODO: here we need to find a command by the first arg
+		if ( argv[ 0 ] == "dump-autoload" )
+		{
+			Autoload.dump();
+		}
 	}
 
 	openRepl ()
@@ -54,7 +68,7 @@ export default class Console
 		this.consoleLoop( rl );
 	}
 
-	showStartMessage()
+	showStartMessage ()
 	{
 		console.log( "Welcome to the conductor of Rhapsody, a Rhapsody repl." );
 		console.log( "For more information use .help command." );
@@ -96,7 +110,7 @@ export default class Console
 
 	public static processCliResponse ( response: string ): boolean
 	{
-		if( Console.isCommand( response ) )
+		if ( Console.isCommand( response ) )
 		{
 			return Commands.execute( response );
 		}
@@ -114,7 +128,7 @@ export default class Console
 		}
 	}
 
-	static isCommand( command : string )
+	static isCommand ( command: string )
 	{
 		return ( command.charAt( 0 ) == "." );
 	}

@@ -16,6 +16,7 @@ export default class Commands
 		 * We need to register manually because dynamically could
 		 * give us problems when is compiled (giving to the final
 		 * user the possibility to read our commands easily).
+		 * Maybe we can autoload all commands in a compiled file.
 		 */
 		Commands.add( ExitCommand );
 		Commands.add( HelpCommand );

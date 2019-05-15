@@ -100,13 +100,24 @@ function tsTranspile ( cb )
 	cb();
 };
 
-function showMessage()
+function makeAutoload ( cb )
 {
-	notifier.notify( {
-		title: "Message",
-		message: "test"
-	} );
-}
+	// var tsProject = ts.createProject( {
+
+	// } );
+
+	// var tsResult = tsProject.src()
+	// 	.pipe( sourcemaps.init() )
+	// 	.pipe( tsProject() )
+	// 	.on( 'error', reportError );
+
+	// tsResult.js
+	// 	.pipe( sourcemaps.write() )
+	// 	.pipe( gulp.dest( 'app/autoload.js' ) )
+	// 	.on( 'error', reportError );
+
+	cb();
+};
 
 function reportError( error )
 {
@@ -123,13 +134,14 @@ exports.watch = function ( cb )
 	//livereload( { start : true } );
 	gulp.watch(
 		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
-		gulp.series( jsClean, tsTranspile )
+		gulp.series( jsClean, makeAutoload, tsTranspile )
 	);
 
 	gulp.watch(
 		[ 'src/views/templates/**/*' ],
 		gulp.series( templatesClean, templatesCopy )
 	);
+
 	gulp.watch(
 		[ 'src/views/styles/**/*' ],
 		gulp.series( cssClean, sassTranspile )
