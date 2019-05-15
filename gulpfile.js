@@ -33,11 +33,14 @@ function sassTranspile ( cb )
 {
 	gulp.src( './src/views/styles/app.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
-		.pipe( gulp.dest( './app/src/views/styles' ) );
+		.pipe( gulp.dest( './app/src/views/styles' ) )
+		.on( 'error', reportError );
+
 
 	notifier.notify( {
-		title: "Sass compiled.",
-		message: "Sass compiled."
+		title: "Sass transpiled",
+		message: "Sass transpiled",
+		icon: './core/components/gulp/sass.png'
 	} );
 
 	cb();
@@ -64,10 +67,13 @@ function publish ( cb )
 function templatesCopy ( cb )
 {
 	gulp.src( 'src/views/templates/**/*' )
-		.pipe( gulp.dest( 'app/src/views/templates' ) );
+		.pipe( gulp.dest( 'app/src/views/templates' ) )
+		.on( 'error', reportError );
+
 	notifier.notify( {
-		title: "Templates compiled.",
-		message: "Templates compiled."
+		title: "Templates transpiled",
+		message: "Templates transpiled",
+		icon: './core/components/gulp/html.png'
 	} );
 	cb();
 }
@@ -85,10 +91,11 @@ function tsTranspile ( cb )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( tsProject.options.outDir ) )
 		.on( 'error', reportError );
+
 	notifier.notify( {
 		title: "Typescript transpiled",
 		message: "Typescript transpiled",
-		icon: './core/components/gulp/gulp.png'
+		icon: './core/components/gulp/ts.png'
 	} );
 	cb();
 };
@@ -106,6 +113,7 @@ function reportError( error )
 	notifier.notify( {
 		title: error.message,
 		message: error.stack,
+		sound: "Basso",
 		icon: './core/components/gulp/error.png'
 	} );
 }
