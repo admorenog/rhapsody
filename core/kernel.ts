@@ -9,7 +9,6 @@ import Router from './system/routes/Router';
 import Controller from './system/controllers/Controller';
 import Renderer from './system/views/Render';
 import Commands from './system/console/repl/Commands';
-import Autoload from '../storage/cache/autoload'
 
 export default class Kernel
 {
@@ -67,7 +66,7 @@ export default class Kernel
 		global[ "app" ] = app;
 		global[ "view" ] = Controller.view;
 		global[ "conductor" ] = Commands;
-		global[ "models" ] = Autoload.getModels();
+		//global[ "models" ] = Autoload.getModels();
 		Config.setGlobals();
 	}
 
@@ -75,11 +74,16 @@ export default class Kernel
 	{
 		Kernel.menu = Kernel.initMenu();
 		Kernel.windows = new WindowRenderers();
+		Kernel.loadCache();
 		app.on( 'window-all-closed', Kernel.onWindowAllClosed );
 		app.on( 'ready', Kernel.onReady );
 		app.on( 'activate', Kernel.onActivate );
 	}
 
+	static loadCache()
+	{
+		global[ "cached" ] = require( '../../storage/cache/autoload' ).default;
+	}
 
 	static bootstrap ()
 	{

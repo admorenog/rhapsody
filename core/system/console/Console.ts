@@ -40,6 +40,7 @@ export default class Console
 	{
 		if ( this.argv.length == 0 )
 		{
+			Console.loadCache();
 			this.openRepl();
 		}
 		else
@@ -54,6 +55,10 @@ export default class Console
 		if ( argv[ 0 ] == "dump-autoload" )
 		{
 			Autoload.dump();
+		}
+		else
+		{
+			Console.loadCache();
 		}
 	}
 
@@ -131,5 +136,10 @@ export default class Console
 	static isCommand ( command: string )
 	{
 		return ( command.charAt( 0 ) == "." );
+	}
+
+	static loadCache()
+	{
+		global[ "cached" ] = require( '../../../../storage/cache/autoload' ).default;
 	}
 }

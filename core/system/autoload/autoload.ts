@@ -92,14 +92,14 @@ export default class Autoload
 		let imports = "";
 		for( let model in Autoload.models )
 		{
-			imports += `const ${ model } = require("../../../${ Autoload.models[ model ] }");\n`;
+			imports += `const ${ model } = require("../../app/${ Autoload.models[ model ] }");\n`;
 		}
 		return imports;
 	}
 
 	static getModelsFn() : string
 	{
-		let models = "{";
+		let models = "{\n";
 		let isFirst = true;
 		for( let model in Autoload.models )
 		{
@@ -111,11 +111,19 @@ export default class Autoload
 			{
 				isFirst = false;
 			}
-			models += `"${ model }" : ${ model }`;
+			models += `			"${ model }" : ${ model }`;
 		}
-		models += "}";
+		models += "\n		}";
 		return `static getModels(){\n`+
 		`\t	return ${ models };\n`+
 		`\t}\n`;
+	}
+
+	static registerModels()
+	{
+		// var models = { Graph : cached.getModels()[ "Graph" ].default }
+		// global( "models" ) = models;
+		// Graph = cached.getModels()[ "Graph" ]
+		// (new Graph.default).get().then( (rec) => { console.log(rec); } );
 	}
 }

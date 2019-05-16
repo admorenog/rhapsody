@@ -28,7 +28,6 @@ let argv = process.argv;
 
 var console = new Console( argv );
 console.consoleManager();
-
 /*
 var builder = require( 'electron-builder' );
 
