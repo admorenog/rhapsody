@@ -11,6 +11,11 @@ export default class Config
 	private static envVars : any;
 	private static configVars : any;
 
+	/***
+	 * @deprecated: The autoload file will be config manager and this will be
+	 * deleted.
+	 */
+
 	public static config( configVar? : string, configValue? : any )
 	{
 		Config.loadConfigVars();
@@ -90,12 +95,6 @@ export default class Config
 			let envVars = JSON.parse( fs.readFileSync( fullname, Config.encoding ) );
 			this.envVars = envVars;
 		}
-	}
-
-	public static setGlobals()
-	{
-		global[ "env" ] = Config.env;
-		global[ "config" ] = Config.config;
 	}
 
 	private static getAppPath() : string

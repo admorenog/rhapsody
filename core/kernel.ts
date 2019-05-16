@@ -53,42 +53,38 @@ export default class Kernel
 		return menu;
 	}
 
-	private static getContext ()
-	{
-		return {
-			config: config()
-		}
-	}
-
-	private static setGlobals ()
+	private static setGlobals ( canLoadCache : boolean = true )
 	{
 		global[ "kernel" ] = this;
 		global[ "app" ] = app;
 		global[ "view" ] = Controller.view;
 		global[ "conductor" ] = Commands;
-		//global[ "models" ] = Autoload.getModels();
-		Config.setGlobals();
+		/**
+		 * We need to ignore the autoload file only when we executing the
+		 * command `conductor dump-autoload` and to avoid typescript errors
+		 * we need to call it dynamically with a require.
+		 */
+		if( canLoadCache )
+		{
+			const autoload = require( '../../storage/cache/autoload' ).default;
+			global[ "models" ] = autoload.getModels();
+			global[ "env" ] = autoload.getEnv();
+			global[ "config" ] = autoload.getConfig();
+		}
 	}
 
 	static windowManager ()
 	{
 		Kernel.menu = Kernel.initMenu();
 		Kernel.windows = new WindowRenderers();
-		Kernel.loadCache();
 		app.on( 'window-all-closed', Kernel.onWindowAllClosed );
 		app.on( 'ready', Kernel.onReady );
 		app.on( 'activate', Kernel.onActivate );
 	}
 
-	static loadCache()
-	{
-		global[ "cached" ] = require( '../../storage/cache/autoload' ).default;
-	}
-
-	static bootstrap ()
+	static bootstrap ( canLoadCache : boolean )
 	{
 		Commands.register();
-		Kernel.setGlobals();
+		Kernel.setGlobals( canLoadCache );
 	}
-
 }

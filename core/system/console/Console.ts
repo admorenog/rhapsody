@@ -3,7 +3,8 @@ import Commands from './repl/Commands';
 import Autoload from '../autoload/autoload';
 
 /**
- * Read, eval, print and loop
+ * Command line utilitie to make the develop
+ * easier
  */
 export default class Console
 {
@@ -40,7 +41,6 @@ export default class Console
 	{
 		if ( this.argv.length == 0 )
 		{
-			Console.loadCache();
 			this.openRepl();
 		}
 		else
@@ -55,10 +55,6 @@ export default class Console
 		if ( argv[ 0 ] == "dump-autoload" )
 		{
 			Autoload.dump();
-		}
-		else
-		{
-			Console.loadCache();
 		}
 	}
 
@@ -79,7 +75,7 @@ export default class Console
 		console.log( "For more information use .help command." );
 	}
 
-	async consoleLoop ( rl )
+	async consoleLoop ( rl : readline.Interface )
 	{
 		var keepOpen: boolean = true;
 		while ( keepOpen )
@@ -136,10 +132,5 @@ export default class Console
 	static isCommand ( command: string )
 	{
 		return ( command.charAt( 0 ) == "." );
-	}
-
-	static loadCache()
-	{
-		global[ "cached" ] = require( '../../../../storage/cache/autoload' ).default;
 	}
 }

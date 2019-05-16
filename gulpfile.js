@@ -7,6 +7,8 @@ const ts = require( 'gulp-typescript' );
 const sass = require( 'gulp-sass' );
 const sourcemaps = require( 'gulp-sourcemaps' );
 const notifier = require( 'node-notifier' );
+const child_process = require( 'child_process' );
+const path = require( 'path' );
 
 function clean ( cb )
 {
@@ -102,6 +104,7 @@ function tsTranspile ( cb )
 
 function makeAutoload ( cb )
 {
+	child_process.execSync( process.cwd() + path.sep + "conductor.js dump-autoload" );
 	// var tsProject = ts.createProject( {
 
 	// } );
@@ -134,7 +137,7 @@ exports.watch = function ( cb )
 	//livereload( { start : true } );
 	gulp.watch(
 		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
-		gulp.series( jsClean, makeAutoload, tsTranspile )
+		gulp.series( jsClean, tsTranspile )
 	);
 
 	gulp.watch(

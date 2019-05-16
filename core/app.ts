@@ -3,6 +3,8 @@ import Kernel from './kernel';
 /**
  * Initialize the application
  */
-Kernel.bootstrap();
+
+let canLoadCache = true;
+Kernel.bootstrap( canLoadCache );
 
 Kernel.windowManager();

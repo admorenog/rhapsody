@@ -22,9 +22,15 @@ const Console = require( "./app/core/system/console/Console" ).default;
  * manager we going to call our console manager.
  */
 
-kernel.bootstrap();
-
 let argv = process.argv;
+
+let canLoadCache = true;
+
+if( argv.length > 2 && argv[ 2 ] == "dump-autoload" )
+{
+	canLoadCache = false;
+}
+kernel.bootstrap( canLoadCache );
 
 var console = new Console( argv );
 console.consoleManager();
