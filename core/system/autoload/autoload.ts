@@ -7,7 +7,7 @@ export default class Autoload
 	static models: {} = {};
 	static envVars: {} = {};
 	static config: {} = {};
-	static cmds : {} = {};
+	static cmds: {} = {};
 	public static async getConfigFiles (): Promise<string[]>
 	{
 		return new Promise( ( resolve, rejects ) =>
@@ -97,7 +97,7 @@ export default class Autoload
 			let indexOfExtensionSep = filename.lastIndexOf( "." );
 			let indexOfFileName = filename.lastIndexOf( path.sep );
 			filename = filename.substring( 0, indexOfExtensionSep );
-			let key = require("../../../" + filename).default.signature;
+			let key = require( "../../../" + filename ).default.signature;
 			filename = filename.substring( indexOfFileName + 1 );
 			Autoload.cmds[ key ] = filename;
 			console.log( key, filename.substring( 0, indexOfExtensionSep ) );
@@ -230,16 +230,16 @@ export default class Autoload
 	}
 
 
-	public static env( envVar : string, envValue? : any )
+	public static env ( envVar: string, envValue?: any )
 	{
-		if( envValue !== undefined )
+		if ( envValue !== undefined )
 		{
 			Autoload.envVars[ envVar ] = envValue;
 		}
 
 		let envToReturn = null;
 
-		if( envVar !== undefined )
+		if ( envVar !== undefined )
 		{
 			envToReturn = Autoload.envVars[ envVar ];
 		}
