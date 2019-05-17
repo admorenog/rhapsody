@@ -9,6 +9,7 @@ import Router from './system/routes/Router';
 import Controller from './system/controllers/Controller';
 import Renderer from './system/views/Render';
 import Commands from './system/console/repl/Commands';
+import Autoload from './system/autoload/autoload';
 
 export default class Kernel
 {
@@ -59,6 +60,7 @@ export default class Kernel
 		global[ "app" ] = app;
 		global[ "view" ] = Controller.view;
 		global[ "conductor" ] = Commands;
+		global[ "commands" ] = { "dump-autoload" : Autoload.dump };
 		/**
 		 * We need to ignore the autoload file only when we executing the
 		 * command `conductor dump-autoload` and to avoid typescript errors
@@ -66,10 +68,11 @@ export default class Kernel
 		 */
 		if( canLoadCache )
 		{
-			const autoload = require( '../../storage/cache/autoload' ).default;
-			global[ "models" ] = autoload.getModels();
-			global[ "env" ] = autoload.getEnv();
-			global[ "config" ] = autoload.getConfig();
+			const cached = require( '../../storage/cache/autoload' ).default;
+			global[ "models" ] = cached.getModels();
+			global[ "env" ] = cached.getEnv();
+			global[ "config" ] = cached.getConfig();
+			global[ "commands" ] = cached.getCommands();
 		}
 	}
 

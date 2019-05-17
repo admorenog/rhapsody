@@ -11,6 +11,8 @@ export default class Console
 	nodePath: string;
 	conductorPath: string;
 
+	command = null;
+
 	argv: string[] = [];
 
 	constructor ( argv: string[] )
@@ -32,30 +34,42 @@ export default class Console
 			}
 			else
 			{
-				this.argv.push( argv[ idxArg ] );
+				if( this.argv.length == 0 )
+				{
+					this.command = argv[ idxArg ];
+				}
+				else
+				{
+					this.argv.push( argv[ idxArg ] );
+				}
 			}
 		}
 	}
 
+	public shouldLoadCache()
+	{
+		return !( this.command != null && this.command.indexOf( "autoload" ) != -1 )
+	}
+
 	consoleManager ()
 	{
-		if ( this.argv.length == 0 )
+		if ( this.command == undefined )
 		{
 			this.openRepl();
 		}
 		else
 		{
-			this.findCommand( this.argv );
+			this.execCommand( this.argv );
 		}
 	}
 
-	findCommand ( argv: string[] )
+	execCommand ( argv: string[] )
 	{
-		//TODO: here we need to find a command by the first arg
-		if ( argv[ 0 ] == "dump-autoload" )
+		if ( commands[ this.command ] == undefined )
 		{
-			Autoload.dump();
+			throw new Error( `The command ${ this.command } doesn't exists.` );
 		}
+		commands[ this.command ]( argv );
 	}
 
 	openRepl ()

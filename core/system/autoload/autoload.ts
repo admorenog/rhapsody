@@ -7,6 +7,7 @@ export default class Autoload
 	static models: {} = {};
 	static envVars: {} = {};
 	static config: {} = {};
+	static cmds : {} = {};
 	public static async getConfigFiles (): Promise<string[]>
 	{
 		return new Promise( ( resolve, rejects ) =>
@@ -36,6 +37,18 @@ export default class Autoload
 		} );
 	}
 
+	public static async getCommands (): Promise<string[]>
+	{
+		return new Promise( ( resolve, rejects ) =>
+		{
+			glob( "core/system/console/Commands/*.ts", ( error: Error, matches: string[] ) =>
+			{
+				if ( error ) { rejects( error ); }
+				resolve( matches );
+			} )
+		} );
+	}
+
 	public static async clearAutoloadFile (): Promise<any>
 	{
 		return new Promise( ( resolve, rejects ) =>
@@ -49,13 +62,13 @@ export default class Autoload
 
 	public static async dump ()
 	{
-		await this.clearAutoloadFile();
+		await Autoload.clearAutoloadFile();
 
 		Autoload.envVars = JSON.parse( Autoload.getEnv() );
 
-		global[ "env" ] = this.env;
+		global[ "env" ] = Autoload.env;
 
-		let configFiles = await this.getConfigFiles();
+		let configFiles = await Autoload.getConfigFiles();
 		for ( let idxConfigFile in configFiles )
 		{
 			let filename = configFiles[ idxConfigFile ];
@@ -67,7 +80,7 @@ export default class Autoload
 			Autoload.config[ key ] = config;
 		}
 
-		let models = await this.getModels();
+		let models = await Autoload.getModels();
 		for ( let idxModel in models )
 		{
 			let filename = models[ idxModel ];
@@ -77,29 +90,48 @@ export default class Autoload
 			Autoload.models[ key ] = filename.substring( 0, indexOfExtensionSep );
 		}
 
-		let autoloadContent = this.getFileSyntax();
+		let cmds = await Autoload.getCommands();
+		for ( let idxCmd in cmds )
+		{
+			let filename = cmds[ idxCmd ];
+			let indexOfExtensionSep = filename.lastIndexOf( "." );
+			let indexOfFileName = filename.lastIndexOf( path.sep );
+			filename = filename.substring( 0, indexOfExtensionSep );
+			let key = require("../../../" + filename).default.signature;
+			filename = filename.substring( indexOfFileName + 1 );
+			Autoload.cmds[ key ] = filename;
+			console.log( key, filename.substring( 0, indexOfExtensionSep ) );
+		}
+
+		let autoloadPath = 'storage/cache/autoload.js';
+		let autoloadContent = Autoload.getFileSyntax();
 		fs.writeFileSync(
-			'storage/cache/autoload.js',
+			autoloadPath,
 			autoloadContent
 		);
+
+		console.log( `dumped autoload file in ${ autoloadPath }` );
 	}
 
 	static getFileSyntax (): string
 	{
+		let modelImports = Autoload.getModelImports();
+		let cmdImports = Autoload.getCommandsImports();
 		let models = Autoload.getModelsFn();
 		let env = Autoload.getEnvFn();
 		let config = Autoload.getConfigFn();
-		let modelImports = Autoload.getModelImports();
+		let commands = Autoload.getCommandsFn();
 		let classDefinition =
 			`Object.defineProperty(exports, "__esModule", { value: true });\n` +
 			`${ modelImports }\n` +
+			`${ cmdImports }\n` +
 			`class Autoload {\n` +
 			`	${ models }\n` +
 			`	${ env }\n` +
 			`	${ config }\n` +
+			`	${ commands }\n` +
 			`}\n` +
 			`exports.default = Autoload;`;
-		console.log( classDefinition );
 		return classDefinition;
 	}
 
@@ -154,6 +186,38 @@ export default class Autoload
 		config += "\n		}";
 		return `static getConfig(){\n` +
 			`\t	return ${ config };\n` +
+			`\t}\n`;
+	}
+	static getCommandsImports (): string
+	{
+		let imports = "";
+		let importPath = "../../app/core/system/console/Commands/";
+		for ( let cmd in Autoload.cmds )
+		{
+			imports += `const ${ Autoload.cmds[ cmd ] } = require("${ importPath }${ Autoload.cmds[ cmd ] }");\n`;
+		}
+		return imports;
+	}
+
+	static getCommandsFn (): string
+	{
+		let cmds = "{\n";
+		let isFirst = true;
+		for ( let cmd in Autoload.cmds )
+		{
+			if ( !isFirst )
+			{
+				cmds += ",\n";
+			}
+			else
+			{
+				isFirst = false;
+			}
+			cmds += `			"${ cmd }" : ${ Autoload.cmds[ cmd ] }.default`;
+		}
+		cmds += "\n		}";
+		return `static getCommands(){\n` +
+			`\t	return ${ cmds };\n` +
 			`\t}\n`;
 	}
 

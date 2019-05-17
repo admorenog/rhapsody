@@ -24,15 +24,10 @@ const Console = require( "./app/core/system/console/Console" ).default;
 
 let argv = process.argv;
 
-let canLoadCache = true;
-
-if( argv.length > 2 && argv[ 2 ] == "dump-autoload" )
-{
-	canLoadCache = false;
-}
-kernel.bootstrap( canLoadCache );
-
 var console = new Console( argv );
+
+kernel.bootstrap( console.shouldLoadCache() );
+
 console.consoleManager();
 /*
 var builder = require( 'electron-builder' );
