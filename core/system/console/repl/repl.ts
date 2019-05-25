@@ -1,77 +1,10 @@
-/// <reference path="../../system/Globals.d.ts" />
-
 import * as readline from 'readline';
-// import * as util from 'util';
-import Commands from './repl/Commands';
+import Commands from './Commands';
 
-/**
- * Command line utility to make the develop
- * easier
- */
-export default class Console
+export default class Repl
 {
-	nodePath: string;
-	conductorPath: string;
-
-	command = null;
-
-	argv: string[] = [];
-
-	constructor ( argv: string[] )
+	constructor ()
 	{
-		this.setArgs( argv );
-	}
-
-	setArgs ( argv: string[] ): void
-	{
-		for ( let idxArg in argv )
-		{
-			if ( argv[ idxArg ].indexOf( "node" ) != -1 )
-			{
-				this.nodePath = argv[ idxArg ];
-			}
-			else if ( argv[ idxArg ].indexOf( "conductor" ) != -1 )
-			{
-				this.conductorPath = argv[ idxArg ];
-			}
-			else
-			{
-				if( this.argv.length == 0 )
-				{
-					this.command = argv[ idxArg ];
-				}
-				else
-				{
-					this.argv.push( argv[ idxArg ] );
-				}
-			}
-		}
-	}
-
-	public shouldLoadCache()
-	{
-		return !( this.command != null && this.command.indexOf( "autoload" ) != -1 )
-	}
-
-	consoleManager ()
-	{
-		if ( this.command == undefined )
-		{
-			this.openRepl();
-		}
-		else
-		{
-			this.execCommand( this.argv );
-		}
-	}
-
-	execCommand ( argv: string[] )
-	{
-		if ( commands[ this.command ] == undefined )
-		{
-			throw new Error( `The command ${ this.command } doesn't exists.` );
-		}
-		commands[ this.command ]( argv );
 	}
 
 	openRepl ()
@@ -112,7 +45,7 @@ export default class Console
 		{
 			rl.question( '>>> ', ( response ) =>
 			{
-				var keepOpen = Console.processCliResponse( response );
+				var keepOpen = Repl.processCliResponse( response );
 				if ( keepOpen )
 				{
 					resolve();
@@ -127,7 +60,7 @@ export default class Console
 
 	public static processCliResponse ( response: string ): boolean
 	{
-		if ( Console.isCommand( response ) )
+		if ( Repl.isCommand( response ) )
 		{
 			return Commands.execute( response );
 		}

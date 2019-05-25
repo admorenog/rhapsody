@@ -28,14 +28,14 @@ export default class Kernel
 
 	private static onReady (): void
 	{
-		let views = config( "app" )[ "start_views" ];
+		let views = config[ "app" ][ "start_views" ];
 
 		for ( let idxView in views )
 		{
 			Router.route( views[ idxView ] );
 		}
 
-		Kernel.systray = new Systray( config( "systray" ) );
+		Kernel.systray = new Systray( config[ "systray" ] );
 	}
 
 	private static onActivate (): void

@@ -1,5 +1,10 @@
 # TO·DO
-- Models (ws, redis, database, json files, etc)
+- Conductor
+	- Make a better repl for conductor
+	- Make a custom command for user
+	- Make repl commands
+
+- Models (ws, redis, database, json files, csv, excel, etc)
 	- Make a query builder...
 
 - Assets folder unique between styles and images.
@@ -10,10 +15,11 @@
 
 - Fancy introduction on startup.
 
-- Config files and .env file is injected, ¿should I cache a transpiled files?
+- Cache (autoload)
+	- Config files injected in a compiled file, ¿should I cache a transpiled file?
+	- Models
+	- Commands
 
 - Node executable to compile and create default files easily.
 
-- Interactive node console with the kernel loaded.
-
-- On compiled file we have a visualization problem.
+- On packaged (final publish) we have a visualization problem.

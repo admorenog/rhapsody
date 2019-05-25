@@ -41,7 +41,7 @@ export default class MainController extends Controller
 
 		graphInfo.get().then( ( results : any[] ) =>
 		{
-			let vars = { ctx : kernel.getContext(), graphInfo : results };
+			let vars = { ctx : config, graphInfo : results };
 			return view( window, 'main', { vars : vars } );
 		} );
 	}

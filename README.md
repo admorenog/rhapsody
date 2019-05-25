@@ -48,10 +48,10 @@ The .env file setups the environment variables, these variables are only to setu
 It's not saved because it isn't neccesary to run the project (config files can manage it).
 
 ## Config files
-In the config folder we have some .js files. The difference between the .env file and this files are that there is a lot of variables that probabilly you'll never change and in the .env file we going to store the main variables that commonly we are changing.
+In the config folder we have some .js files. The difference between the .env file and this files are that there is a lot of variables that probabilly you'll never change and in the .env file we going to store the main variables that commonly we are changing while we are developing.
 
 ## core folder
-A folder with a bunch of porn. Useless, but don't touch it, please.
+A folder with a bunch of porn. Useless, don't touch it, please.
 
 ## dist folder
 Here is where we going to compile the release version of our application.

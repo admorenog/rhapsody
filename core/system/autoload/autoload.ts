@@ -185,7 +185,7 @@ export default class Autoload
 		}
 		config += "\n		}";
 		return `static getConfig(){\n` +
-			`\t	return ${ config };\n` +
+			`\t	return () => { return ${ config } };\n` +
 			`\t}\n`;
 	}
 	static getCommandsImports (): string

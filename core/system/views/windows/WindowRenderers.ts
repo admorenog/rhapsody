@@ -37,7 +37,7 @@ export default class WindowRenderers
 
 		WindowRenderers.render.load( window, name, vars );
 
-		if ( config( 'app' )[ "debug" ] )
+		if ( config[ 'app' ][ "debug" ] )
 		{
 			window.webContents.openDevTools();
 		}

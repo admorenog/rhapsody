@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#!/usr/bin/env node
 
 /**
  * This utility can be used to build our app faster with commands:
