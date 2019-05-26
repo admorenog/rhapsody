@@ -1,8 +1,12 @@
 # TO·DO
+- Better setup (execute a command instead 500 and creating folders.)
+
 - Conductor
 	- Make a better repl for conductor
 	- Make a custom command for user
 	- Make repl commands
+
+- Exception handler
 
 - Models (ws, redis, database, json files, csv, excel, etc)
 	- Make a query builder...
