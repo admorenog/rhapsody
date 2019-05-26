@@ -6,6 +6,8 @@
 	- Make a custom command for user
 	- Make repl commands
 
+- Translations
+
 - Exception handler
 
 - Models (ws, redis, database, json files, csv, excel, etc)

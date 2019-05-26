@@ -1,7 +1,6 @@
 /// <reference path="../../system/Globals.d.ts" />
 
 import * as readline from 'readline';
-// import * as util from 'util';
 import Commands from './repl/Commands';
 
 /**
@@ -36,7 +35,7 @@ export default class Console
 			}
 			else
 			{
-				if( this.argv.length == 0 )
+				if( this.command == null )
 				{
 					this.command = argv[ idxArg ];
 				}

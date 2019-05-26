@@ -70,13 +70,15 @@ function templatesCopy ( cb )
 {
 	gulp.src( 'src/views/templates/**/*' )
 		.pipe( gulp.dest( 'app/src/views/templates' ) )
-		.on( 'error', reportError );
-
-	notifier.notify( {
-		title: "Templates transpiled",
-		message: "Templates transpiled",
-		icon: './core/components/gulp/html.png'
-	} );
+		.on( 'error', reportError )
+		.on( 'finish', () =>
+		{
+			notifier.notify( {
+				title: "Templates copied",
+				message: "Templates copied",
+				icon: './core/components/gulp/html.png'
+			} );
+		} );
 	cb();
 }
 
@@ -122,11 +124,12 @@ function makeAutoload ( cb )
 	cb();
 };
 
-function reportError( error )
+function reportError ( error )
 {
+	console.error( error.stack );
 	notifier.notify( {
-		title: error.message,
-		message: error.stack,
+		title: error.name,
+		message: error.message,
 		sound: "Basso",
 		icon: './core/components/gulp/error.png'
 	} );
@@ -156,9 +159,9 @@ exports.default = gulp.series(
 	clean,
 	gulp.parallel(
 		sassTranspile,
-		tsTranspile,
-		templatesCopy
-	)
+		tsTranspile
+	),
+	gulp.series( templatesClean, templatesCopy )
 );
 
 exports.prod = gulp.series(

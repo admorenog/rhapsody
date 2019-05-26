@@ -185,7 +185,7 @@ export default class Autoload
 		}
 		config += "\n		}";
 		return `static getConfig(){\n` +
-			`\t	return () => { return ${ config } };\n` +
+			`\t	return ${ config };\n` +
 			`\t}\n`;
 	}
 	static getCommandsImports (): string
@@ -213,7 +213,7 @@ export default class Autoload
 			{
 				isFirst = false;
 			}
-			cmds += `			"${ cmd }" : ${ Autoload.cmds[ cmd ] }.default`;
+			cmds += `			"${ cmd }" : ${ Autoload.cmds[ cmd ] }.default.run`;
 		}
 		cmds += "\n		}";
 		return `static getCommands(){\n` +
