@@ -1,4 +1,4 @@
-/// <reference path="../../system/Globals.d.ts" />
+/// <reference path="../helpers/Globals.d.ts" />
 
 import * as readline from 'readline';
 import Commands from './repl/Commands';

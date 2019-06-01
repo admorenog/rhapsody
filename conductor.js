@@ -14,21 +14,29 @@
 
 "use strict";
 
-const kernel = require( "./app/core/kernel" ).default;
-const Console = require( "./app/core/system/console/Console" ).default;
+try
+{
+	const kernel = require( "./app/core/kernel" ).default;
+	const Console = require( "./app/core/system/console/Console" ).default;
 
-/**
- * We need to bootstrap the same app, but instead calling the electron window
- * manager we going to call our console manager.
- */
+	/**
+	 * We need to bootstrap the same app, but instead calling the electron window
+	 * manager we going to call our console manager.
+	 */
 
-let argv = process.argv;
+	let argv = process.argv;
 
-var console = new Console( argv );
+	var console = new Console( argv );
 
-kernel.bootstrap( console.shouldLoadCache() );
+	kernel.bootstrap( console.shouldLoadCache() );
 
-console.consoleManager();
+	console.consoleManager();
+}
+catch ( err )
+{
+	const Exception = require( "./app/core/system/exceptions/Exception" ).default;
+	( new Exception( err ) ).show();
+}
 /*
 var builder = require( 'electron-builder' );
 

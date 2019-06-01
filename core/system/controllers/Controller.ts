@@ -1,4 +1,4 @@
-/// <reference path="../Globals.d.ts" />
+/// <reference path="../helpers/Globals.d.ts" />
 export default class Controller
 {
 	public static view ( window, view, vars )

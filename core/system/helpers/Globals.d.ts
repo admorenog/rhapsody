@@ -7,3 +7,4 @@ declare var models: any;
 declare var env : any;
 declare var config: Function;
 declare var commands: any;
+declare var tr : any;

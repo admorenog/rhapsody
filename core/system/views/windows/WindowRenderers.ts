@@ -1,4 +1,4 @@
-/// <reference path="../../Globals.d.ts" />
+/// <reference path="../../helpers/Globals.d.ts" />
 
 import WindowRenderer from './WindowRenderer';
 import Renderer from '../Render'

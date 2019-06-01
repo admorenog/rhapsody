@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "debug conductor",
 			"program": "${workspaceFolder}/conductor.js",
-			"args": [ "show-text", "asdasd" ],
+			// "args": [ "show-text", "asdasd" ],
 			"console": "integratedTerminal"
 		},
 		{

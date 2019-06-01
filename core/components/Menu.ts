@@ -1,4 +1,4 @@
-/// <reference path="../system/Globals.d.ts" />
+/// <reference path="../system/helpers/Globals.d.ts" />
 
 import { Menu as MainMenu } from 'electron';
 

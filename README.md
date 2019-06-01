@@ -25,8 +25,6 @@ git clone https://github.com/admorenog/rhapsody.git
 npm install
 ```
 
-	Dont' worry about the sass vulnerabilities, these packages are used only in development mode and I hope they can fix it soon.
-
 - Finally we need to execute gulp (maybe you need to install it globally).
 ```bash
 gulp

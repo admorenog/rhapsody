@@ -1,4 +1,4 @@
-/// <reference path="../Globals.d.ts" />
+/// <reference path="../helpers/Globals.d.ts" />
 
 import DriverManager from "./Drivers/DriverManager";
 import Connection from "./Connections/Connection";

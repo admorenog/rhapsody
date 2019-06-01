@@ -1,3 +1,5 @@
+/// <reference path="../../../system/helpers/Globals.d.ts" />
+
 import * as fs from 'fs';
 import * as path from 'path';
 import * as child_process from 'child_process';
@@ -10,8 +12,8 @@ export default class MakeModel
 	{
 		if( argv[ 0 ] == null )
 		{
-			// TODO: make translatable dynamic texts with a global helper.
-			throw new Error( `You need to write the model name as argument, write ./conductor help make:model for more information about this command.` );
+			// Dump error prettier
+			throw new Error( tr( "conductor.errors.command.model.arg_required") );
 		}
 		let filename = 'src/models/' + argv[0] + '.ts';
 		if( fs.existsSync( filename ) )

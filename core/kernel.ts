@@ -1,4 +1,4 @@
-/// <reference path="./system/Globals.d.ts" />
+/// <reference path="./system/helpers/Globals.d.ts" />
 
 import { app } from 'electron';
 import WindowRenderers from './system/views/windows/WindowRenderers';
@@ -10,6 +10,7 @@ import Controller from './system/controllers/Controller';
 import Renderer from './system/views/Render';
 import Commands from './system/console/repl/Commands';
 import Autoload from './system/autoload/autoload';
+import Translator from './system/translator/translator';
 
 export default class Kernel
 {
@@ -68,6 +69,7 @@ export default class Kernel
 		 */
 		if( canLoadCache )
 		{
+			global[ "tr" ] = Translator.translate;
 			const cached = require( '../../storage/cache/autoload' ).default;
 			global[ "models" ] = cached.getModels();
 			global[ "env" ] = cached.getEnv();
