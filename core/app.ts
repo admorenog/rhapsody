@@ -4,7 +4,15 @@ import Kernel from './kernel';
  * Initialize the application
  */
 
-let canLoadCache = true;
-Kernel.bootstrap( canLoadCache );
+try
+{
+	let canLoadCache = true;
+	Kernel.bootstrap( canLoadCache );
 
-Kernel.windowManager();
+	Kernel.windowManager();
+}
+catch ( err )
+{
+	const Exception = require( "./app/core/system/exceptions/Exception" ).default;
+	( new Exception( err ) ).render();
+}

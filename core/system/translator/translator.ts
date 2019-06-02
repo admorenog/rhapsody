@@ -1,3 +1,5 @@
+/// <reference path="../helpers/Globals.d.ts" />
+
 export default class Translator
 {
 	public static translations : object = null;
@@ -9,6 +11,15 @@ export default class Translator
 			Translator.translations = require( '../../../../storage/cache/translations' ).default;
 		}
 
-		return eval( `Translator.translations.${ dotSignatureTranslationKey }` );
+		let lang = config[ "app" ].lang;
+
+		if( lang == "system" )
+		{
+			lang = app.getLocale();
+		}
+
+		let variableName = `Translator.translations.${ lang }.${ dotSignatureTranslationKey }`;
+
+		return eval( variableName );
 	}
 }

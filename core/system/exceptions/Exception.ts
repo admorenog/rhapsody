@@ -6,8 +6,19 @@ export default class Exception
 		Exception.error = err;
 	}
 
+	/**
+	 * This method is for showing the exception formatted for command line.
+	 */
 	show()
 	{
 		console.error( Exception.error.message );
+	}
+
+	/**
+	 * This method is for showing the exception in the gui mode.
+	 */
+	render()
+	{
+		alert( Exception.error.message );
 	}
 }
