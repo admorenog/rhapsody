@@ -8,8 +8,8 @@
 			"type": "node",
 			"request": "launch",
 			"name": "debug conductor",
-			"program": "${workspaceFolder}/conductor.js",
-			// "args": [ "show-text", "asdasd" ],
+			"program": "${workspaceFolder}/conductor",
+			"args": [ "dump-autoload" ],
 			"console": "integratedTerminal"
 		},
 		{

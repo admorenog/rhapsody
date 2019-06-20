@@ -9,7 +9,7 @@ import Router from './system/routes/Router';
 import Controller from './system/controllers/Controller';
 import Renderer from './system/views/Render';
 import Commands from './system/console/repl/Commands';
-import Autoload from './system/autoload/autoload';
+import Autoload from './system/cache/autoload';
 import Translator from './system/translator/translator';
 
 export default class Kernel
@@ -55,24 +55,26 @@ export default class Kernel
 		return menu;
 	}
 
-	private static setGlobals ( canLoadCache : boolean = true )
+	private static setGlobals ( canLoadCache: boolean = true )
 	{
 		global[ "kernel" ] = this;
 		global[ "app" ] = app;
 		global[ "view" ] = Controller.view;
 		global[ "conductor" ] = Commands;
-		global[ "commands" ] = { "dump-autoload" : Autoload.dump };
+		global[ "commands" ] = { "dump-autoload": Autoload.dump };
 		/**
 		 * We need to ignore the autoload file only when we executing the
 		 * command `conductor dump-autoload` and to avoid typescript errors
 		 * we need to call it dynamically with a require.
 		 */
-		if( canLoadCache )
+		if ( canLoadCache )
 		{
 			global[ "tr" ] = Translator.translate;
+			// TODO: we should load the cached info in multiple files
+			// and interfaces to access to this files and not in
+			// the kernel.
 			const cached = require( '../../storage/cache/autoload' ).default;
 			global[ "models" ] = cached.getModels();
-			global[ "env" ] = cached.getEnv();
 			global[ "config" ] = cached.getConfig();
 			global[ "commands" ] = cached.getCommands();
 		}
@@ -87,7 +89,7 @@ export default class Kernel
 		app.on( 'activate', Kernel.onActivate );
 	}
 
-	static bootstrap ( canLoadCache : boolean )
+	static bootstrap ( canLoadCache: boolean )
 	{
 		Commands.register();
 		Kernel.setGlobals( canLoadCache );

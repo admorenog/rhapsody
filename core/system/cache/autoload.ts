@@ -1,6 +1,10 @@
 import * as glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
+import Commands from './autoload/commands';
+import Config from './autoload/config';
+import Models from './autoload/models';
+import Translations from './autoload/translations';
 
 export default class Autoload
 {
@@ -8,6 +12,9 @@ export default class Autoload
 	static envVars: {} = {};
 	static config: {} = {};
 	static cmds: {} = {};
+
+	// TODO: split into multiple files, one per cached file.
+
 	public static async getConfigFiles (): Promise<string[]>
 	{
 		return new Promise( ( resolve, rejects ) =>
@@ -100,7 +107,6 @@ export default class Autoload
 			let key = require( "../../../" + filename ).default.signature;
 			filename = filename.substring( indexOfFileName + 1 );
 			Autoload.cmds[ key ] = filename;
-			console.log( key, filename.substring( 0, indexOfExtensionSep ) );
 		}
 
 		let autoloadPath = 'storage/cache/autoload.js';
@@ -111,6 +117,18 @@ export default class Autoload
 		);
 
 		console.log( `dumped autoload file in ${ autoloadPath }` );
+
+		let cfg = new Config;
+		await cfg.dump();
+
+		let mod = new Models;
+		await mod.dump();
+
+		let comm = new Commands;
+		await comm.dump();
+
+		let translations = new Translations;
+		await translations.dump();
 	}
 
 	static getFileSyntax (): string
@@ -134,6 +152,7 @@ export default class Autoload
 			`exports.default = Autoload;`;
 		return classDefinition;
 	}
+
 
 	static getModelImports (): string
 	{
