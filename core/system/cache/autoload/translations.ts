@@ -30,17 +30,19 @@ export default class Translations extends Cache
 		} );
 	}
 
-	async getMethods (): Promise<string>
+	async getProperties (): Promise<string>
 	{
 		return new Promise( async ( resolve, rejects ) =>
 		{
 			try
 			{
+				let className = this.constructor.name;
 				let methods = "";
 				for ( let key in this.data )
 				{
-					methods += `static ${ key }( vars ) { return ${ this.data[ key ] }; }`;
+					methods += `${ className }.${ key } = ${ this.data[ key ] };\n`;
 				}
+				methods += "\n";
 				resolve( methods );
 			}
 			catch ( error )

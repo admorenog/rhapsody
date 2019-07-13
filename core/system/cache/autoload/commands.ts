@@ -70,7 +70,7 @@ export default class Commands extends Cache
 					cmds += `			"${ cmd }" : ${ this.data[ cmd ] }.default.run`;
 				}
 				cmds += "\n		}";
-				resolve( `static load(){\n` +
+				resolve( `static getCommands(){\n` +
 					`\t	return ${ cmds };\n` +
 					`\t}\n`);
 			}

@@ -2,3 +2,4 @@ node_modules
 app
 dist
 .DS_Store
+package-lock.json

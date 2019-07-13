@@ -38,9 +38,9 @@ export default class Cache
 			`Object.defineProperty(exports, "__esModule", { value: true });\n` +
 			`${ imports }\n` +
 			`class ${ className } {\n` +
-			`	${ properties }\n` +
 			`	${ methods }\n` +
 			`}\n` +
+			`${ properties }\n` +
 			`exports.default = ${ className };`;
 		return classDefinition;
 	}

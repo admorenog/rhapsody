@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "debug conductor",
 			"program": "${workspaceFolder}/conductor",
-			"args": [ "dump-autoload" ],
+			// "args": [ "dump-autoload" ],
 			"console": "integratedTerminal"
 		},
 		{

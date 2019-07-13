@@ -70,13 +70,12 @@ export default class Kernel
 		if ( canLoadCache )
 		{
 			global[ "tr" ] = Translator.translate;
-			// TODO: we should load the cached info in multiple files
-			// and interfaces to access to this files and not in
-			// the kernel.
-			const cached = require( '../../storage/cache/autoload' ).default;
-			global[ "models" ] = cached.getModels();
-			global[ "config" ] = cached.getConfig();
-			global[ "commands" ] = cached.getCommands();
+			const models = require( '../../storage/cache/models' ).default;
+			const config = require( '../../storage/cache/config' ).default;
+			const commands = require( '../../storage/cache/commands' ).default;
+			global[ "models" ] = models.getModels();
+			global[ "config" ] = config.getConfig();
+			global[ "commands" ] = commands.getCommands();
 		}
 	}
 

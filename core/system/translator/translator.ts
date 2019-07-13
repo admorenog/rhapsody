@@ -8,9 +8,16 @@ export default class Translator
 	{
 		if( Translator.translations == null )
 		{
-			Translator.translations = require(
-				'../../../../storage/cache/translations'
-			).default;
+			try
+			{
+				Translator.translations = require(
+					'../../../../storage/cache/translations'
+				).default;
+			}
+			catch ( error )
+			{
+				console.log( error );
+			}
 		}
 
 		let lang = config[ "app" ].lang;
@@ -23,13 +30,18 @@ export default class Translator
 			}
 			else
 			{
-				lang = "es";
+				lang = "en";
 			}
 		}
 
 		// FIXME: this requires the vars for any translation, maybe we need to use
 		// any different than a js for the translations
-		let variableName = `Translator.translations.${ lang }( vars ).${ dotSignatureTranslationKey }`;
-		return eval( variableName );
+		let translationsVariable = "Translator.translations";
+		let variableName = (
+			`${ translationsVariable }.
+			${ lang }.
+			${ dotSignatureTranslationKey }`
+		);
+		return eval( `${ variableName }` );
 	}
 }

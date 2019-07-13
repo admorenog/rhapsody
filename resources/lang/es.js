@@ -1,6 +1,6 @@
 ({
 	"app" : {
-		"debug" : "modo de depuración " + `${ vars.ctx.app.debug }`
+		"debug" : "modo de depuración ${ vars.ctx.app.debug }"
 	},
 	"menu" : {
 		"open" : "Abrir"
