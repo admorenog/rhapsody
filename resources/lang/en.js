@@ -1,6 +1,6 @@
 ({
 	app : {
-		debug : `debug mode ${ vars.ctx.app.debug }`
+		debug : "debug mode ${ vars.ctx.app.debug }"
 	},
 	menu : {
 		open : "Open"

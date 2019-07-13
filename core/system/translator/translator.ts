@@ -34,8 +34,6 @@ export default class Translator
 			}
 		}
 
-		// FIXME: this requires the vars for any translation, maybe we need to use
-		// any different than a js for the translations
 		let translationsVariable = "Translator.translations";
 		let variableName = (
 			`${ translationsVariable }.
