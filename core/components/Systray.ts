@@ -3,7 +3,7 @@ import * as path from 'path'
 
 export default class Systray
 {
-	public iconPath: string = './resources/images/icon.png';
+	public iconPath: string = './res/images/icon.png';
 	public icon: NativeImage;
 	public tray: Tray;
 	public menu: Menu;

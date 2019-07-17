@@ -23,7 +23,7 @@ function jsClean ( cb )
 
 function templatesClean ( cb )
 {
-	return del( [ 'app/src/views/templates' ], cb );
+	return del( [ 'app/src/views' ], cb );
 }
 
 function cssClean ( cb )
@@ -68,8 +68,8 @@ function publish ( cb )
 
 function templatesCopy ( cb )
 {
-	gulp.src( 'src/views/templates/**/*' )
-		.pipe( gulp.dest( 'app/src/views/templates' ) )
+	gulp.src( 'src/views/**/*' )
+		.pipe( gulp.dest( 'app/src/views' ) )
 		.on( 'error', reportError )
 		.on( 'finish', () =>
 		{
@@ -144,7 +144,7 @@ exports.watch = function ( cb )
 	);
 
 	gulp.watch(
-		[ 'src/views/templates/**/*' ],
+		[ 'src/views/**/*' ],
 		gulp.series( templatesClean, templatesCopy )
 	);
 

@@ -70,9 +70,9 @@ export default class Kernel
 		if ( canLoadCache )
 		{
 			global[ "tr" ] = Translator.translate;
-			const models = require( '../../storage/cache/models' ).default;
-			const config = require( '../../storage/cache/config' ).default;
-			const commands = require( '../../storage/cache/commands' ).default;
+			const models = require( '../../tmp/models' ).default;
+			const config = require( '../../tmp/config' ).default;
+			const commands = require( '../../tmp/commands' ).default;
 			global[ "models" ] = models.getModels();
 			global[ "config" ] = config.getConfig();
 			global[ "commands" ] = commands.getCommands();

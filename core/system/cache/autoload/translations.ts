@@ -9,7 +9,7 @@ export default class Translations extends Cache
 		return new Promise( async ( resolve, rejects ) => {
 			try
 			{
-				let data = await super.getDirInfo( "resources/lang/*.js" );
+				let data = await super.getDirInfo( "res/lang/*.js" );
 
 				for ( let idx in data )
 				{

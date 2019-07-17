@@ -17,7 +17,7 @@ export default class Autoload
 	{
 		return new Promise( ( resolve, rejects ) =>
 		{
-			fs.unlink( 'storage/cache/autoload.js', ( err ) =>
+			fs.unlink( 'tmp/autoload.js', ( err ) =>
 			{
 				resolve();
 			} );

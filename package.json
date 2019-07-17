@@ -52,10 +52,6 @@
 		"mac": {
 			"category": "framework"
 		},
-		"extraFiles": [
-			".env",
-			"config/**/*"
-		],
 		"asar": "true"
 	}
 }

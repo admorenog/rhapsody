@@ -49,7 +49,7 @@ export default class Cache
 	{
 		await this.loadData();
 		let filename = this.constructor.name.toLowerCase();
-		let path = `storage/cache/${ filename }.js`;
+		let path = `tmp/${ filename }.js`;
 		let imports = await this.getImports();
 		let properties = await this.getProperties();
 		let methods = await this.getMethods();

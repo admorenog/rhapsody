@@ -55,7 +55,7 @@ Here is where we going to compile the release version of our application.
 ## node_modules
 Vendor modules for nodejs, if you have any problem with npm you can delete it and execute npm install again to remake it.
 
-## resources folder
+## res folder
 This is the assets path, we can store here anything. Our view scripts and sass will be transpiled into this folder (inside css and js folders).
 
 ## MVC
@@ -64,7 +64,7 @@ In the controllers and models folders we just going to save the models and the c
 ### templates
 ejs files to make the view.
 ### scripts
-ts files that will be transpiled in the resources folder to use in the templates.
+ts files that will be transpiled in the res folder to use in the templates.
 ### styles
 scss files like the scripts folder.
 

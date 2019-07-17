@@ -51,10 +51,10 @@ export default class WindowRenderers
 		if( !this.render )
 		{
 			this.render = new Renderer( {
-				viewPath: 'app/src/views/templates',
+				viewPath: 'app/src/views',
 				viewProtcolName: 'view',
 				useAssets: true,
-				assetsPath: 'app/src/views',
+				assetsPath: 'res',
 				assetsProtocolName: 'asset'
 			} );
 			this.render.use( 'ejs' );

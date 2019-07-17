@@ -13,6 +13,6 @@ try
 }
 catch ( err )
 {
-	const Exception = require( "./app/core/system/exceptions/Exception" ).default;
+	const Exception = require( "./system/exceptions/Exception" ).default;
 	( new Exception( err ) ).render();
 }

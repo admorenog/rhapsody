@@ -11,7 +11,7 @@ export default class Translator
 			try
 			{
 				Translator.translations = require(
-					'../../../../storage/cache/translations'
+					'../../../../tmp/translations'
 				).default;
 			}
 			catch ( error )
@@ -35,11 +35,7 @@ export default class Translator
 		}
 
 		let translationsVariable = "Translator.translations";
-		let variableName = (
-			`${ translationsVariable }.
-			${ lang }.
-			${ dotSignatureTranslationKey }`
-		);
+		let variableName = `${ translationsVariable }.${ lang }.${ dotSignatureTranslationKey }`;
 		return eval( `${ variableName }` );
 	}
 }

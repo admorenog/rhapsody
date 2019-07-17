@@ -13,5 +13,19 @@
 				}
 			}
 		}
+	},
+	main : {
+		sidebar : {
+			introduction : "Introduction",
+			getting_started : "Getting started",
+			cheatsheet : "cheatsheet",
+			docs : "documentation",
+			examples: "examples",
+			about : "about",
+		},
+		introduction :
+		{
+			specs : "specs"
+		}
 	}
 })

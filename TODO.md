@@ -6,8 +6,6 @@
 	- Make a custom command for user
 	- Make repl commands
 
-- Translations
-
 - Exception handler
 
 - Models (ws, redis, database, json files, csv, excel, etc)
@@ -20,11 +18,6 @@
 - Menu and systray config
 
 - Fancy introduction on startup.
-
-- Cache (autoload)
-	- Config files injected in a compiled file, ¿should I cache a transpiled file?
-	- Models
-	- Commands
 
 - Node executable to compile and create default files easily.
 

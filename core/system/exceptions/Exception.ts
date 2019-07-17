@@ -19,6 +19,7 @@ export default class Exception
 	 */
 	render()
 	{
-		alert( Exception.error.message );
+		console.error( Exception.error.message );
+		throw Exception.error;
 	}
 }

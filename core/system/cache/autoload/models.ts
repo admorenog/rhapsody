@@ -35,7 +35,7 @@ export default class Models extends Cache
 				let imports = "";
 				for ( let model in this.data )
 				{
-					imports += `const ${ model } = require("../../app/${ this.data[ model ] }");\n`;
+					imports += `const ${ model } = require("../app/${ this.data[ model ] }");\n`;
 				}
 				resolve( imports );
 			}

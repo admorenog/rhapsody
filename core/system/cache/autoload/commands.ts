@@ -35,7 +35,7 @@ export default class Commands extends Cache
 			try
 			{
 				let imports = "";
-				let importPath = "../../app/core/system/console/Commands/";
+				let importPath = "../app/core/system/console/Commands/";
 				for ( let cmd in this.data )
 				{
 					imports += `const ${ this.data[ cmd ] } = require("${ importPath }${ this.data[ cmd ] }");\n`;
