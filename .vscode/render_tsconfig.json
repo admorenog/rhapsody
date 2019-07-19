@@ -3,8 +3,8 @@
 		"module": "commonjs",
 		"target": "es6",
 		"sourceMap": true,
-		"rootDir": "..",
-		"outDir": "../app",
+		"rootDir": "../src/views",
+		"outDir": "../res",
 		"noEmit": false,
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
@@ -19,7 +19,7 @@
 			"node"
 		]
 	},
-	"include": [ "../core/**/*.ts" ],
-	"exclude": [ "../node_modules", "../src/views/**/*.ts" ]
+	"include": [ "../src/views/**/*.ts" ],
+	"exclude": [ "../node_modules" ]
 
 }

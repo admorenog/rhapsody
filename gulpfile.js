@@ -16,9 +16,14 @@ function clean ( cb )
 	cb();
 }
 
-function jsClean ( cb )
+function mainJsClean ( cb )
 {
 	return del( [ 'app/**/*.js*' ], cb );
+}
+
+function renderJsClean ( cb )
+{
+	return del( [ 'res/scripts/**/*.js*' ], cb );
 }
 
 function templatesClean ( cb )
@@ -35,7 +40,7 @@ function sassTranspile ( cb )
 {
 	gulp.src( './src/views/styles/app.scss' )
 		.pipe( sass().on( 'error', sass.logError ) )
-		.pipe( gulp.dest( './app/src/views/styles' ) )
+		.pipe( gulp.dest( './res/styles' ) )
 		.on( 'error', reportError );
 
 
@@ -68,7 +73,7 @@ function publish ( cb )
 
 function templatesCopy ( cb )
 {
-	gulp.src( 'src/views/**/*' )
+	gulp.src( 'src/views/**/*.ejs' )
 		.pipe( gulp.dest( 'app/src/views' ) )
 		.on( 'error', reportError )
 		.on( 'finish', () =>
@@ -82,9 +87,31 @@ function templatesCopy ( cb )
 	cb();
 }
 
-function tsTranspile ( cb )
+function mainTsTranspile ( cb )
 {
 	var tsProject = ts.createProject( '.vscode/tsconfig.json' );
+
+	var tsResult = tsProject.src()
+		.pipe( sourcemaps.init() )
+		.pipe( tsProject() )
+		.on( 'error', reportError );
+
+	tsResult.js
+		.pipe( sourcemaps.write() )
+		.pipe( gulp.dest( tsProject.options.outDir ) )
+		.on( 'error', reportError );
+
+	notifier.notify( {
+		title: "Typescript transpiled",
+		message: "Typescript transpiled",
+		icon: './core/components/gulp/ts.png'
+	} );
+	cb();
+};
+
+function renderTsTranspile ( cb )
+{
+	var tsProject = ts.createProject( '.vscode/render_tsconfig.json' );
 
 	var tsResult = tsProject.src()
 		.pipe( sourcemaps.init() )
@@ -137,14 +164,23 @@ function reportError ( error )
 
 exports.watch = function ( cb )
 {
-	//livereload( { start : true } );
+	// Files we need to watch
+	// TS files of the core
+	// TS files of the render
+	// EJS files
+	// Sass files
 	gulp.watch(
-		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
-		gulp.series( jsClean, tsTranspile )
+		[ 'core/**/*.ts', '!src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
+		gulp.series( mainJsClean, mainTsTranspile )
 	);
 
 	gulp.watch(
-		[ 'src/views/**/*' ],
+		[ 'src/**/*.ts', '!core/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
+		gulp.series( renderJsClean, renderTsTranspile )
+	);
+
+	gulp.watch(
+		[ 'src/views/**/*.ejs' ],
 		gulp.series( templatesClean, templatesCopy )
 	);
 
@@ -159,7 +195,7 @@ exports.default = gulp.series(
 	clean,
 	gulp.parallel(
 		sassTranspile,
-		tsTranspile
+		mainTsTranspile
 	),
 	gulp.series( templatesClean, templatesCopy )
 );
@@ -168,7 +204,7 @@ exports.prod = gulp.series(
 	clean,
 	gulp.parallel(
 		sassTranspile,
-		tsTranspile,
+		mainTsTranspile,
 		templatesCopy
 	),
 	gulp.parallel(
