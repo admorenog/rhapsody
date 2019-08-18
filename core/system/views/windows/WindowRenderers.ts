@@ -51,7 +51,7 @@ export default class WindowRenderers
 		if( !this.render )
 		{
 			this.render = new Renderer( {
-				viewPath: 'app/src/views',
+				viewPath: 'app/src/views/templates',
 				viewProtcolName: 'view',
 				useAssets: true,
 				assetsPath: 'res',

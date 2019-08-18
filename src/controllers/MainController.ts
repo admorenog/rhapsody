@@ -20,7 +20,7 @@ export default class MainController extends Controller
 					kernel.windows.get( "load/loader" ).hide();
 					kernel.windows.get( "main" ).show();
 					showSlowly( "main", 0 );
-				}, 50000 );
+				}, 2000 );
 
 				function showSlowly ( view, opacity )
 				{

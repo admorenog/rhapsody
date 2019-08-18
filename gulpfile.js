@@ -170,12 +170,12 @@ exports.watch = function ( cb )
 	// EJS files
 	// Sass files
 	gulp.watch(
-		[ 'core/**/*.ts', '!src/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
+		[ 'core/**/*.ts', 'src/**/*.ts', '!src/views/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
 		gulp.series( mainJsClean, mainTsTranspile )
 	);
 
 	gulp.watch(
-		[ 'src/**/*.ts', '!core/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
+		[ 'src/views/**/*.ts', '!core/**/*.ts', '!src/views/templates/**/*', '!src/views/styles/**/*' ],
 		gulp.series( renderJsClean, renderTsTranspile )
 	);
 

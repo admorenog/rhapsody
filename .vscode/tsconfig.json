@@ -19,7 +19,7 @@
 			"node"
 		]
 	},
-	"include": [ "../core/**/*.ts" ],
+	"include": [ "../core/**/*.ts", "../src/**/*.ts" ],
 	"exclude": [ "../node_modules", "../src/views/**/*.ts" ]
 
 }
