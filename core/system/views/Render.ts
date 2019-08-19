@@ -3,10 +3,12 @@
  */
 import { app, protocol } from 'electron'
 import * as ejs from 'ejs'
+import * as pug from 'pug'
+import * as haml from 'haml'
 import * as path from 'path'
 import * as url from 'url'
 
-const parseFilePath = ( urlString ) =>
+const parseFilePath = ( urlString: string ) =>
 {
 	const parsedUrl = url.parse( urlString )
 	let fileName = parsedUrl.pathname
@@ -14,27 +16,19 @@ const parseFilePath = ( urlString ) =>
 	if ( process.platform === 'win32' ) fileName = fileName.substr( 1 )
 	fileName = fileName.replace( /(?:\s|%20)/g, ' ' )
 
-	return fileName
+	return fileName;
 }
 
 export default class Renderer
 {
-	private _renderers;
-	private _currentRenderer;
-	private _viewPath;
-	private _viewProtcolName;
-	private _useAssets;
-	private _assetsPath;
-	private _assetsProtocolName;
-	private _views: object;
-	private _view: string;
-	get renderers () { return this._renderers }
-	get currentRenderer () { return this._currentRenderer }
-	get viewPath () { return this._viewPath }
-	get viewProtcolName () { return this._viewProtcolName }
-	get useAssets () { return this._useAssets }
-	get assetsPath () { return this._assetsPath }
-	get assetsProtocolName () { return this._assetsProtocolName }
+	private renderers: any;
+	private currentRenderer: any;
+	private viewPath: string;
+	private viewProtcolName: string;
+	private useAssets: boolean;
+	private assetsPath: string;
+	private assetsProtocolName: string;
+	private views: object;
 
 	/**
 	 * @constructor
@@ -68,17 +62,23 @@ export default class Renderer
 		useAssets = false,
 		assetsPath = 'assets',
 		assetsProtocolName = 'asset'
-	} = {} )
+	}: {
+		viewPath: string;
+		viewProtcolName: string;
+		useAssets: boolean;
+		assetsPath: string;
+		assetsProtocolName: string;
+	} )
 	{
-		this._renderers = {}
-		this._currentRenderer = {}
-		this._views = {}
+		this.renderers = {}
+		this.currentRenderer = {}
+		this.views = {}
 
-		this._viewProtcolName = viewProtcolName
-		this._useAssets = useAssets
-		this._assetsPath = assetsPath
-		this._assetsProtocolName = assetsProtocolName
-		this._viewPath = viewPath
+		this.viewProtcolName = viewProtcolName
+		this.useAssets = useAssets
+		this.assetsPath = assetsPath
+		this.assetsProtocolName = assetsProtocolName
+		this.viewPath = viewPath
 
 		this._populateDefaultRenderers()
 	}
@@ -97,7 +97,7 @@ export default class Renderer
 	 * @param {Object} viewData - Additional view data in case it is supported by renderer
 	 * @param {function} callback - required callback to be called with the rendered HTML
 	 */
-	add ( name: string, { extension = null, rendererAction, viewPath }: { extension: string; viewPath: string; rendererAction: ( filePath: any, viewData: any, callback: any ) => void; } ) : void
+	private addRender ( name: string, { extension = null, rendererAction, viewPath }: { extension: string; viewPath: string; rendererAction: ( filePath: string, viewData: any, callback: Function ) => void; } ): void
 	{
 		if ( !name ) throw new Error( 'Renderer name required' )
 
@@ -107,17 +107,17 @@ export default class Renderer
 			name: name,
 		}
 
-		this._renderers[ name ] = data
+		this.renderers[ name ] = data
 	}
 
-	load (
+	public load (
 		browserWindow: Electron.BrowserWindow,
 		view: string,
 		viewData: any,
 		{ query = {} } = {}
 	)
 	{
-		this._views[ view ] = {
+		this.views[ view ] = {
 			viewData: viewData
 		}
 
@@ -131,7 +131,7 @@ export default class Renderer
 		} ) )
 	}
 
-	renderTemplate ( request )
+	private renderTemplate ( request: Electron.RegisterBufferProtocolRequest )
 	{
 		return new Promise( ( resolve, reject ) =>
 		{
@@ -140,33 +140,40 @@ export default class Renderer
 			const fileName = parseFilePath( request.url )
 			const extension = renderer.extension || `.${ renderer.name }`
 			const filePath = path.join( this.viewPath, `${ fileName }${ extension }` )
-			let viewName: string = ( typeof ( parsedUrl.query._view ) == "string" ) ?
+			const viewName: string = ( typeof ( parsedUrl.query._view ) == "string" ) ?
 				parsedUrl.query._view :
 				null;
-			const viewData = this._views[ viewName ].viewData
+			const viewData = this.views[ viewName ] ?
+				this.views[ viewName ].viewData :
+				null;
 
-			renderer.rendererAction( filePath, viewData, ( renderedHTML ) =>
+			renderer.rendererAction( filePath, viewData, ( renderedHTML: string ) =>
 			{
 				resolve( {
 					mimeType: 'text/html',
 					data: Buffer.from( renderedHTML ),
-				} )
-			} )
-		} )
+				} );
+			} );
+		} );
 	}
 
-	setupViewProtocol ()
+	private setupViewProtocol (): void
 	{
-		protocol.registerBufferProtocol( this.viewProtcolName, ( request, callback ) =>
-		{
-			this.renderTemplate( request ).then( ( resolution: { data, mimeType } ) =>
-			{
-				callback( resolution )
-			} ).catch( ( error ) => console.error( error ) )
-		}, ( error ) => { if ( error ) console.error( 'Failed to register view protocol' ) } )
+		protocol.registerBufferProtocol(
+			this.viewProtcolName,
+			( request: Electron.RegisterBufferProtocolRequest, callback: Function ) => {
+				this.renderTemplate( request ).then(
+					( resolution: Buffer | Electron.MimeTypedBuffer ) => {
+						callback( resolution );
+					} ).catch( ( error ) => console.error( error ) );
+			},
+			( error: Error ) => {
+				if ( error )
+					console.error( error );
+			} );
 	}
 
-	setupAssetsProtocol ()
+	private setupAssetsProtocol (): void
 	{
 		protocol.registerFileProtocol( this.assetsProtocolName, ( request, callback ) =>
 		{
@@ -175,55 +182,87 @@ export default class Renderer
 			const filePath: string = path.join( this.assetsPath, hostName, fileName )
 
 			callback( filePath )
-		}, ( error ) => { if ( error ) console.error( 'Failed to register asset protocol' ) } )
+		}, ( error ) => { if ( error ) console.error( 'Failed to register asset protocol' ) } );
 	}
 
-	use ( name : string )
+	public use ( name: string ): void
 	{
-		this._currentRenderer = this.renderers[ name ]
+		this.currentRenderer = this.renderers[ name ];
 
 		app.on( 'ready', () =>
 		{
 			this.setupViewProtocol()
-			if ( this.useAssets ) this.setupAssetsProtocol()
+			if ( this.useAssets ) this.setupAssetsProtocol();
 		} )
 	}
 
-	_populateEJSRenderer ()
+	private _populateEJSRenderer (): void
 	{
-		this.add( 'ejs', {
+		this.addRender( 'ejs', {
 			extension: '.ejs',
 			viewPath: 'views',
 			rendererAction: ( filePath, viewData, callback ) =>
 			{
-				ejs.renderFile( filePath, viewData, {}, ( error : any, html ) =>
+				ejs.renderFile( filePath, viewData, {}, ( error: any, html: string ) =>
 				{
 					if ( error )
 					{
 						if ( error.file ) error.message += `\n\nERROR @(${ error.file }:${ error.line }:${ error.column })`
-						throw new Error( error )
+						throw error;
 					}
 
-					callback( html )
-				} )
+					callback( html );
+				} );
 			}
-		} )
+		} );
 	}
 
-	_populateHAMLRenderer ()
+	private _populateHAMLRenderer (): void
 	{
-		// TODO: add HAML Renderer
+		this.addRender( 'haml', {
+			extension: '.haml',
+			viewPath: 'views',
+			rendererAction: ( filePath, viewData, callback ) =>
+			{
+				haml.renderFile( filePath, viewData, ( error: any, html: string ) =>
+				{
+					if ( error )
+					{
+						if ( error.file ) error.message += `\n\nERROR @(${ error.file }:${ error.line }:${ error.column })`;
+						throw error;
+					}
+
+					callback( html );
+				} );
+			}
+		} );
 	}
 
-	_populatePugRenderer ()
+	private _populatePugRenderer (): void
 	{
-		// TODO: add Pug Renderer
+		this.addRender( 'pug', {
+			extension: '.pug',
+			viewPath: 'views',
+			rendererAction: ( filePath, viewData, callback ) =>
+			{
+				pug.renderFile( filePath, viewData, ( error: any, html: string ) =>
+				{
+					if ( error )
+					{
+						if ( error.file ) error.message += `\n\nERROR @(${ error.file }:${ error.line }:${ error.column })`
+						throw error;
+					}
+
+					callback( html );
+				} );
+			}
+		} );
 	}
 
-	_populateDefaultRenderers ()
+	private _populateDefaultRenderers (): void
 	{
-		this._populateEJSRenderer()
-		this._populateHAMLRenderer()
-		this._populatePugRenderer()
+		this._populateEJSRenderer();
+		this._populateHAMLRenderer();
+		this._populatePugRenderer();
 	}
 }
