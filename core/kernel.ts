@@ -29,6 +29,8 @@ export default class Kernel
 
 	private static onReady (): void
 	{
+		Router.setupRouteProtocol();
+
 		let views = config[ "app" ][ "start_views" ];
 
 		for ( let idxView in views )

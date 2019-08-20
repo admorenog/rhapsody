@@ -115,7 +115,7 @@ export default class Renderer
 		view: string,
 		viewData: any,
 		{ query = {} } = {}
-	)
+	) : void
 	{
 		this.views[ view ] = {
 			viewData: viewData
@@ -123,7 +123,7 @@ export default class Renderer
 
 		query[ "_view" ] = view
 
-		return browserWindow.loadURL( url.format( {
+		browserWindow.loadURL( url.format( {
 			pathname: view,
 			protocol: 'view:',
 			query: query,
@@ -131,7 +131,7 @@ export default class Renderer
 		} ) )
 	}
 
-	private renderTemplate ( request: Electron.RegisterBufferProtocolRequest )
+	private renderTemplate ( request: Electron.RegisterBufferProtocolRequest ): Promise<Electron.MimeTypedBuffer>
 	{
 		return new Promise( ( resolve, reject ) =>
 		{
@@ -161,28 +161,38 @@ export default class Renderer
 	{
 		protocol.registerBufferProtocol(
 			this.viewProtcolName,
-			( request: Electron.RegisterBufferProtocolRequest, callback: Function ) => {
-				this.renderTemplate( request ).then(
-					( resolution: Buffer | Electron.MimeTypedBuffer ) => {
-						callback( resolution );
-					} ).catch( ( error ) => console.error( error ) );
+			(
+				request: Electron.RegisterBufferProtocolRequest,
+				callback: (buffer?: Electron.MimeTypedBuffer | Buffer) => void
+			) =>
+			{
+			this.renderTemplate( request ).then(
+				( resolution: Electron.MimeTypedBuffer ) =>
+				{
+					callback( resolution );
+				} ).catch( ( error : Error ) => console.error( error ) );
 			},
-			( error: Error ) => {
+			( error: Error ) =>
+			{
 				if ( error )
 					console.error( error );
-			} );
+			}
+		);
 	}
 
 	private setupAssetsProtocol (): void
 	{
-		protocol.registerFileProtocol( this.assetsProtocolName, ( request, callback ) =>
-		{
-			const hostName = url.parse( request.url ).hostname
-			const fileName = parseFilePath( request.url )
-			const filePath: string = path.join( this.assetsPath, hostName, fileName )
+		protocol.registerFileProtocol(
+			this.assetsProtocolName,
+			( request: Electron.RegisterFileProtocolRequest, callback: Function ) =>
+			{
+				const hostName = url.parse( request.url ).hostname
+				const fileName = parseFilePath( request.url )
+				const filePath: string = path.join( this.assetsPath, hostName, fileName )
 
-			callback( filePath )
-		}, ( error ) => { if ( error ) console.error( 'Failed to register asset protocol' ) } );
+				callback( filePath )
+			},
+			( error ) => { if ( error ) console.error( 'Failed to register asset protocol' ) } );
 	}
 
 	public use ( name: string ): void

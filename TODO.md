@@ -1,4 +1,7 @@
 # TO·DO
+- Protocol to manage routes (like the view protocol but with the controller.
+route://MainController@index)
+
 - Better setup (execute a command instead 500 and creating folders.)
 
 - Conductor
