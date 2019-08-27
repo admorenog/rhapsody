@@ -4,9 +4,8 @@ export default class Router
 {
 	private static routeProtocolName = "route";
 
-	public static route( route : string ) : any
+	public static route ( route: string ): any
 	{
-		console.log( route );
 		let splittedRoute = route.split( "@" );
 
 		let methodName = splittedRoute[ 0 ];
@@ -16,7 +15,7 @@ export default class Router
 		{
 			let controllerObject = new controllerClass.default();
 			return controllerObject[ methodName ]();
-		});
+		} );
 	}
 
 	public static setupRouteProtocol (): void
@@ -25,27 +24,25 @@ export default class Router
 			Router.routeProtocolName,
 			(
 				request: Electron.RegisterBufferProtocolRequest,
-				callback: (buffer?: Electron.MimeTypedBuffer | Buffer) => void
+				callback: ( buffer?: Electron.MimeTypedBuffer | Buffer ) => void
 			) =>
 			{
-				// TODO: check the mimeType from data... maybe the router should return
-				// always a MymeTypedBuffer...
-
 				let url = request.url.replace( /route:\/\//g, '' );
-				Router.route( url ).then( ( data : any ) => {
-
-					// FIXME: if the data is undefined we have a warning
-					// It's because in the controller we don't have a valid return.
-					if( data == undefined )
+				Router.route( url ).then( ( data: any ) =>
+				{
+					if ( data != undefined )
 					{
-						data = null;
+						if ( typeof ( data ) == "object" )
+						{
+							data = JSON.stringify( data );
+						}
+						let resolution = {
+							data: Buffer.from( data ),
+							mimeType: "application/json"
+						};
+						callback( resolution );
 					}
-					let resolution = {
-						data : Buffer.from( data ),
-						mimeType : "json"
-					};
-					callback( resolution );
-				} ).catch( ( error : Error ) => console.error( error ) );
+				} ).catch( ( error: Error ) => console.error( error ) );
 			},
 			( error: Error ) =>
 			{

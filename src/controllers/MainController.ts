@@ -8,10 +8,9 @@ export default class MainController extends Controller
 		let window = {
 			width: 800, height: 600, show: false, transparent: false,
 			opacity: 0, title: "Rhapsody",
-			webPreferences: { nodeIntegration: false, contextIsolation: true },
-			onReady: ( event ) =>
+			webPreferences: { nodeIntegration: false, contextIsolation: true, webSecurity : false },
+			onReady: ( event : Event ) =>
 			{
-				//kernel.windows.get( "main" ).hide();
 				kernel.windows.get( "main" ).show();
 
 				showSlowly( "load/loader", 0 );
@@ -22,7 +21,7 @@ export default class MainController extends Controller
 					showSlowly( "main", 0 );
 				}, 2000 );
 
-				function showSlowly ( view, opacity )
+				function showSlowly ( view : string, opacity : number )
 				{
 					opacity += 0.01
 					kernel.windows.get( view ).setOpacity( opacity );
@@ -42,7 +41,7 @@ export default class MainController extends Controller
 		graphInfo.get().then( ( results : any[] ) =>
 		{
 			let vars = { ctx : config, graphInfo : results };
-			return view( window, 'main', { vars : vars } );
+			view( window, 'main', { vars : vars } );
 		} );
 	}
 }

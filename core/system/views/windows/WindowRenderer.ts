@@ -25,7 +25,7 @@ export default class WindowRenderer
 		this.window.show();
 	}
 
-	public setOpacity( opacity )
+	public setOpacity( opacity : number )
 	{
 		this.window.setOpacity( opacity );
 	}

@@ -9,7 +9,7 @@ export default class LoaderController extends Controller
 			frame: false, alwaysOnTop: true, show: false,
 			opacity : 0, title : "Rhapsody",
 			webPreferences: { nodeIntegration: false, contextIsolation: true },
-			onReady: ( event ) => {
+			onReady: ( event : Event ) => {
 				windows.get( "load/loader" ).show();
 			}
 		};

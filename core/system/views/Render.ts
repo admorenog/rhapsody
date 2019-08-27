@@ -131,7 +131,8 @@ export default class Renderer
 		} ) )
 	}
 
-	private renderTemplate ( request: Electron.RegisterBufferProtocolRequest ): Promise<Electron.MimeTypedBuffer>
+	private renderTemplate ( request: Electron.RegisterBufferProtocolRequest )
+	: Promise<Electron.MimeTypedBuffer>
 	{
 		return new Promise( ( resolve, reject ) =>
 		{
